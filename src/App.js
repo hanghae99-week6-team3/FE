@@ -1,8 +1,12 @@
 import "./App.css";
-import Comment from "./components/Comment";
+import Write from "./components/Write";
 
 function App() {
-  return <div className='App'></div>;
+  return (
+    <div className="App">
+      <Write />
+    </div>
+  );
 }
 
 export default App;
