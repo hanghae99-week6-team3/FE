@@ -6,7 +6,8 @@ const Layout = (props) => {
 };
 
 const StyledLayout = styled.div`
-  background-color: green;
+  position: relative;
+  background-color: aliceblue;
   margin: 0 auto;
   width: 60rem;
   height: 100vh;
