@@ -71,6 +71,8 @@ const Join = () => {
         onSubmit={(event) => {
           event.preventDefault();
           if (
+            checkId(joinUser.userId) &&
+            checkNickname(joinUser.nickname) &&
             isId(joinUser.userId) &&
             isNickname(joinUser.nickname) &&
             isPassword(joinUser.password) &&
@@ -124,7 +126,7 @@ const Join = () => {
           )}
         </StInputGroup>
         <StInputGroup>
-          <label>비밀번호 재확인</label>
+          <label>비밀번호 확인</label>
           <input type="password" name="passwordConfirm" value={joinUser.passwordConfirm} onChange={onChangeHandler} />
           {joinUser.password === joinUser.passwordConfirm && joinUser.passwordConfirm.length !== 0 ? (
             <StHelper color={GREEN}>비밀번호가 일치합니다.</StHelper>
