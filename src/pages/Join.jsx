@@ -70,9 +70,18 @@ const Join = () => {
       <StJoinForm
         onSubmit={(event) => {
           event.preventDefault();
-          postUser(joinUser);
-          alert("회원가입을 축하합니다!");
-          navigate("/login");
+          if (
+            isId(joinUser.userId) &&
+            isNickname(joinUser.nickname) &&
+            isPassword(joinUser.password) &&
+            joinUser.password === joinUser.passwordConfirm
+          ) {
+            postUser(joinUser);
+            alert("회원가입을 축하합니다!");
+            navigate("/login");
+          } else {
+            alert("올바른 값을 입력해주세요.");
+          }
         }}
       >
         <StInputGroup>
@@ -129,6 +138,9 @@ const Join = () => {
             취소
           </button>
         </StButtonGroup>
+        <StAlreadyUser>
+          이미 회원이신가요? <span onClick={() => navigate("/login")}>로그인하러가기</span>
+        </StAlreadyUser>
       </StJoinForm>
     </Layout>
   );
@@ -181,6 +193,18 @@ const StHelper = styled.div`
   margin-top: 5px;
   font-size: 0.7rem;
   color: ${(props) => props.color};
+`;
+
+const StAlreadyUser = styled.span`
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 0.8rem;
+  color: #999;
+
+  span:hover {
+    cursor: pointer;
+    text-decoration-line: underline;
+  }
 `;
 
 export default Join;
