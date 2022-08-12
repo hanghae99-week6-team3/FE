@@ -1,8 +1,8 @@
 import "./App.css";
-import Comment from "./components/Comment";
+import Router from "./shared/Router";
 
 function App() {
-  return <div className='App'></div>;
+  return <Router />;
 }
 
 export default App;
