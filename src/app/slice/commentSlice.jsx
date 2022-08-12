@@ -53,7 +53,6 @@ const commentSlice = createSlice({
     name: 'commentSlice',
     initialState,
     reducers: {
-
     },
     extraReducers: {
         [loadComment.fulfilled]: (state, { payload }) => state = payload,
@@ -61,7 +60,6 @@ const commentSlice = createSlice({
         [deleteComment.fulfilled]: (state, { payload }) => current(state).filter((item) => item.id !== payload),
         [updateComment.fulfilled]: (state, { payload }) => current(state).map((item) => item.id === payload.id ? { ...item, content: payload.content } : item)
     }
-
 
 })
 
