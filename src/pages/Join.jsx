@@ -8,15 +8,20 @@ import Layout from "../components/common/Layout";
 
 const Join = () => {
   const navigate = useNavigate();
-  //인풋 value 값들을 받을 state의 초기값 설정
+
+  //입력값들을 받을 state의 초기값 설정
   //백엔드에서 서버 url을 받으면 id값은 지워주자. 목서버는 id를 안넘기면 오류가 나서 넣어뒀다.
   const initialState = { id: 0, userId: "", nickname: "", password: "", passwordConfirm: "" };
 
-  //인풋 value 값들을 관리하는 state
+  //입력값들을 관리하는 state
   const [joinUser, setJoinUser] = useState(initialState);
 
   //아이콘 클릭시 비밀번호 보이게 하기
   const [lock, setLock] = useState(true);
+
+  //컬러값 상수
+  const RED = "#ED6055";
+  const GREEN = "#34A853";
 
   //ID 중복확인 함수
   const checkId = (userId) => {
@@ -50,9 +55,24 @@ const Join = () => {
     return regExp.test(value);
   };
 
-  //입력값을 서버로 전송하는 postUser 함수
-  const postUser = async (value) => {
-    await axios.post(`${server_url}/join`, value);
+  //onSubmit 함수
+  const onSubmitHandler = (event) => {
+    event.preventDefault();
+    //입력값들의 모든 조건(중복, 유효성)이 true가 되어야 회원가입이 가능하다.
+    if (
+      checkId(joinUser.userId) &&
+      checkNickname(joinUser.nickname) &&
+      isId(joinUser.userId) &&
+      isNickname(joinUser.nickname) &&
+      isPassword(joinUser.password) &&
+      joinUser.password === joinUser.passwordConfirm
+    ) {
+      postUser(joinUser);
+      alert("회원가입을 축하합니다!");
+      navigate("/login");
+    } else {
+      alert("올바른 값을 입력해주세요.");
+    }
   };
 
   //입력값 변화를 감지하고 state에 업데이트 시켜주는 onChange 함수
@@ -61,31 +81,14 @@ const Join = () => {
     setJoinUser({ ...joinUser, [name]: value });
   };
 
-  //컬러값 상수
-  const RED = "#ED6055";
-  const GREEN = "#34A853";
+  //입력값을 서버로 전송하는 함수
+  const postUser = async (value) => {
+    await axios.post(`${server_url}/join`, value);
+  };
 
   return (
     <Layout>
-      <StJoinForm
-        onSubmit={(event) => {
-          event.preventDefault();
-          if (
-            checkId(joinUser.userId) &&
-            checkNickname(joinUser.nickname) &&
-            isId(joinUser.userId) &&
-            isNickname(joinUser.nickname) &&
-            isPassword(joinUser.password) &&
-            joinUser.password === joinUser.passwordConfirm
-          ) {
-            postUser(joinUser);
-            alert("회원가입을 축하합니다!");
-            navigate("/login");
-          } else {
-            alert("올바른 값을 입력해주세요.");
-          }
-        }}
-      >
+      <StJoinForm onSubmit={onSubmitHandler}>
         <StInputGroup>
           <label>아이디</label>
           <input type="text" autoFocus name="userId" value={joinUser.userId} onChange={onChangeHandler} />
@@ -97,6 +100,7 @@ const Join = () => {
             <StHelper color={GREEN}>사용하실 수 있는 아이디입니다.</StHelper>
           )}
         </StInputGroup>
+
         <StInputGroup>
           <label>닉네임</label>
           <input type="text" name="nickname" value={joinUser.nickname} onChange={onChangeHandler} />
@@ -108,6 +112,7 @@ const Join = () => {
             <StHelper color={GREEN}>사용하실 수 있는 닉네임입니다.</StHelper>
           )}
         </StInputGroup>
+
         <StInputGroup>
           <label>비밀번호</label>
           <input
@@ -125,6 +130,7 @@ const Join = () => {
             </StHelper>
           )}
         </StInputGroup>
+
         <StInputGroup>
           <label>비밀번호 확인</label>
           <input type="password" name="passwordConfirm" value={joinUser.passwordConfirm} onChange={onChangeHandler} />
@@ -134,12 +140,14 @@ const Join = () => {
             <StHelper color={RED}>비밀번호가 일치하지 않습니다.</StHelper>
           )}
         </StInputGroup>
+
         <StButtonGroup>
           <button type="submit">회원가입</button>
           <button type="button" onClick={() => navigate("/")}>
             취소
           </button>
         </StButtonGroup>
+
         <StAlreadyUser>
           이미 회원이신가요? <span onClick={() => navigate("/login")}>로그인하러가기</span>
         </StAlreadyUser>
