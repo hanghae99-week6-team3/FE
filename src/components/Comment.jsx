@@ -1,50 +1,40 @@
 import React from 'react';
 import { useRef } from 'react';
 import { useState } from 'react';
-import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
+import { deleteComment, updateComment } from '../app/slice/commentSlice';
 
-const Comment = () => {
-    const commentData = useRef();
-    const nickName = useRef();
-    const id = new Date().getTime();
-    const [comment, setComment] = useState([
-        { id: 0, comment: '안눙', nickName: '종현' }
-    ]);
-    console.log(comment)
-
+const Comment = ({ id, content, nickname }) => {
+    const dispatch = useDispatch();
+    const [changeMode, setChangeMode] = useState(false);
+    const current_content = useRef();
     return (
-        <CommentList>
-            <form>
-                <input type="text" ref={commentData} />
-                <input type="text" ref={nickName} />
-                <button onClick={(e) => {
-                    e.preventDefault();
-                    setComment([...comment, { comment: commentData.current.value, id, nickName: nickName.current.value }]);
-                }}>댓글 작성</button>
-            </form>
-            <ul>
-                {comment.map((item) => {
-                    return (
-                        <li key={item.id}>
-                            <span>{item.nickName}:{item.comment}</span>
-                            <button onClick={() => {
+        <li key={id}>
+            {
+                !changeMode ?
+                    <>
+                        <span>{nickname}:{content}</span>
+                        <button onClick={(e) => {
+                            e.preventDefault();
+                            setChangeMode(true)
+                        }}>수정</button>
+                    </>
+                    :
+                    <>
+                        <input type="text" defaultValue={content} ref={current_content} />
+                        <button onClick={(e) => {
+                            e.preventDefault();
+                            dispatch(updateComment({ id, content: current_content.current.value, nickname }))
+                            setChangeMode(false)
+                        }}>등록</button>
+                    </>
+            }
 
-                            }}>수정</button>
-                            <button onClick={() => {
-                                setComment(comment.filter((value) => value.id !== item.id))
-                            }}>삭제</button>
-                        </li>
-                    )
-                })}
-            </ul>
-        </CommentList>
+            <button onClick={() => {
+                dispatch(deleteComment(id))
+            }}>삭제</button>
+        </li>
     );
 };
 
 export default Comment;
-
-const CommentList = styled.div`
-    width: 20em;
-    background-color: yellow;
-    
-`
