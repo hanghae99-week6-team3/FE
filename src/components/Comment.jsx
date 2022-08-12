@@ -3,17 +3,19 @@ import { useRef } from 'react';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { deleteComment, updateComment } from '../app/slice/commentSlice';
+import styled from 'styled-components';
 
 const Comment = ({ id, content, nickname }) => {
     const dispatch = useDispatch();
     const [changeMode, setChangeMode] = useState(false);
     const current_content = useRef();
     return (
-        <li key={id}>
+        <List key={id}>
             {
                 !changeMode ?
                     <>
-                        <span>{nickname}:{content}</span>
+                        <span>{nickname}</span>
+                        <span>{content}</span>
                         <button onClick={(e) => {
                             e.preventDefault();
                             setChangeMode(true)
@@ -33,8 +35,12 @@ const Comment = ({ id, content, nickname }) => {
             <button onClick={() => {
                 dispatch(deleteComment(id))
             }}>삭제</button>
-        </li>
+        </List>
     );
 };
 
 export default Comment;
+
+const List = styled.li`
+    list-style:none;
+`

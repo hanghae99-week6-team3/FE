@@ -10,10 +10,9 @@ const CommentList = () => {
     const commentData = useSelector(state => state.comment);
     const dispatch = useDispatch();
     const commentInput = useRef();
-    const nickname = useRef();
     const userId = new Date().getTime();
+    console.log(commentData)
 
-    console.log(commentData);
     useEffect(() => {
         dispatch(loadComment())
     }, [dispatch])
@@ -22,15 +21,12 @@ const CommentList = () => {
         <div>
             <form>
                 <input type="text" ref={commentInput} />
-                <input type="text" ref={nickname} />
                 <button onClick={(e) => {
                     e.preventDefault();
                     if (commentInput.current.value === '') {
                         return alert('댓글을 입력해주세요 !')
-                    } else if (nickname.current.value === '') {
-                        return alert('닉네임을 입력해주세요 !')
                     } else {
-                        dispatch(addComment({ content: commentInput.current.value, userId, nickname: nickname.current.value }));
+                        dispatch(addComment({ content: commentInput.current.value, nickname: "종현" }));
                     }
                 }}>댓글 작성</button>
             </form>
