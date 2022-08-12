@@ -1,11 +1,13 @@
 import axios from "axios";
 import React from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { server_url } from "../app/slice";
 import Layout from "../components/common/Layout";
 
 const Join = () => {
+  const navigate = useNavigate();
   //인풋 value 값들을 받을 state의 초기값 설정
   //백엔드에서 서버 url을 받으면 id값은 지워주자. 목서버는 id를 안넘기면 오류가 나서 넣어뒀다.
   const initialState = { id: 0, userId: "", nickname: "", password: "", passwordConfirm: "" };
@@ -69,6 +71,8 @@ const Join = () => {
         onSubmit={(event) => {
           event.preventDefault();
           postUser(joinUser);
+          alert("회원가입을 축하합니다!");
+          navigate("/login");
         }}
       >
         <StInputGroup>
@@ -121,7 +125,9 @@ const Join = () => {
         </StInputGroup>
         <StButtonGroup>
           <button type="submit">회원가입</button>
-          <button type="button">취소</button>
+          <button type="button" onClick={() => navigate("/")}>
+            취소
+          </button>
         </StButtonGroup>
       </StJoinForm>
     </Layout>
