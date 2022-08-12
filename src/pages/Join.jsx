@@ -2,9 +2,18 @@ import axios from "axios";
 import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
 import { server_url } from "../app/slice";
 import Layout from "../components/common/Layout";
+import {
+  RED,
+  GREEN,
+  StForm,
+  StInputGroup,
+  StButtonGroup,
+  StLock,
+  StHelper,
+  StAlreadyUser,
+} from "../components/elements/StyledLogin";
 
 const Join = () => {
   const navigate = useNavigate();
@@ -18,10 +27,6 @@ const Join = () => {
 
   //아이콘 클릭시 비밀번호 보이게 하기
   const [lock, setLock] = useState(true);
-
-  //컬러값 상수
-  const RED = "#ED6055";
-  const GREEN = "#34A853";
 
   //ID 중복확인 함수
   const checkId = (userId) => {
@@ -39,13 +44,13 @@ const Join = () => {
 
   //ID 유효성 검사 함수
   const isId = (value) => {
-    const regExp = /^(?=.*[a-zA-Z])[-a-zA-Z0-9_.]{8,16}$/;
+    const regExp = /^(?=.*[a-zA-Z])[-a-zA-Z0-9_.]{6,12}$/;
     return regExp.test(value);
   };
 
   //닉네임 유효성 검사 함수
   const isNickname = (value) => {
-    const regExp = /^(?=.*[a-zA-Z가-힣])[a-zA-Z가-힣]{2,10}$/;
+    const regExp = /^(?=.*[a-zA-Z가-힣])[a-zA-Z가-힣]{2,6}$/;
     return regExp.test(value);
   };
 
@@ -88,12 +93,12 @@ const Join = () => {
 
   return (
     <Layout>
-      <StJoinForm onSubmit={onSubmitHandler}>
+      <StForm onSubmit={onSubmitHandler}>
         <StInputGroup>
           <label>아이디</label>
           <input type="text" autoFocus name="userId" value={joinUser.userId} onChange={onChangeHandler} />
           {!isId(joinUser.userId) ? (
-            <StHelper color={RED}>8~16자의 영문을 포함한 숫자와 일부 특수문자(._-)만 입력 가능합니다.</StHelper>
+            <StHelper color={RED}>6~12자의 영문을 포함한 숫자와 일부 특수문자(._-)만 입력 가능합니다.</StHelper>
           ) : !checkId() ? (
             <StHelper color={RED}>중복된 아이디 입니다.</StHelper>
           ) : (
@@ -105,7 +110,7 @@ const Join = () => {
           <label>닉네임</label>
           <input type="text" name="nickname" value={joinUser.nickname} onChange={onChangeHandler} />
           {!isNickname(joinUser.nickname) ? (
-            <StHelper color={RED}>2~10자의 영문과 한글만 입력 가능합니다.</StHelper>
+            <StHelper color={RED}>2~6자의 영문과 한글만 입력 가능합니다.</StHelper>
           ) : !checkNickname() ? (
             <StHelper color={RED}>중복된 닉네임 입니다.</StHelper>
           ) : (
@@ -151,70 +156,9 @@ const Join = () => {
         <StAlreadyUser>
           이미 회원이신가요? <span onClick={() => navigate("/login")}>로그인하러가기</span>
         </StAlreadyUser>
-      </StJoinForm>
+      </StForm>
     </Layout>
   );
 };
-
-const StJoinForm = styled.form`
-  position: absolute;
-
-  width: 400px;
-  padding: 30px;
-  background-color: white;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-`;
-
-const StInputGroup = styled.div`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-
-  label {
-    font-weight: 700;
-  }
-
-  label,
-  input {
-    margin-top: 10px;
-  }
-`;
-
-const StButtonGroup = styled.div`
-  display: flex;
-  margin-top: 10px;
-
-  button {
-    width: 50%;
-  }
-`;
-
-const StLock = styled.div`
-  position: absolute;
-  margin-top: 40px;
-  margin-right: 5px;
-  right: 0;
-  cursor: pointer;
-`;
-
-const StHelper = styled.div`
-  margin-top: 5px;
-  font-size: 0.7rem;
-  color: ${(props) => props.color};
-`;
-
-const StAlreadyUser = styled.span`
-  display: inline-block;
-  margin-top: 10px;
-  font-size: 0.8rem;
-  color: #999;
-
-  span:hover {
-    cursor: pointer;
-    text-decoration-line: underline;
-  }
-`;
 
 export default Join;
