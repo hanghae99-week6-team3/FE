@@ -1,45 +1,54 @@
 import React from 'react';
 import { useRef } from 'react';
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { deleteComment, updateComment } from '../app/slice/commentSlice';
 import styled from 'styled-components';
 
-const Comment = ({ item, setRefresh }) => {
+const Comment = ({ item }) => {
     const dispatch = useDispatch();
     const current_content = useRef();
     const [mode, setMode] = useState('read');
-    console.log(mode)
 
     return (
-        //이 부분이 useSelector로 받아온 데이터를 map으로 돌린 부분입니다 !
         <L>
             {
                 mode === "read" ?
-                    <>
-                        <Nickname>{item.nickname}</Nickname>
-                        <Content>{item.content}</Content>
-                        <button onClick={() => {
-                            setMode("modify")
-                        }}>수정</button>
+                    <CommentAlign>
+                        <CommentInfo>
+                            <Nickname>{item.nickname}</Nickname>
+                            <Content>{item.content}</Content>
+                        </CommentInfo>
+                        <DropdownBtn>
+                            View More
+                        </DropdownBtn>
+                        <CommentBtn>
+                            <button onClick={() => {
+                                setMode("modify")
+                            }}>수정</button>
+                            <button onClick={() => {
+                                dispatch(deleteComment(item.id));
+                            }}>삭제</button>
+                        </CommentBtn>
 
-                    </>
+                    </CommentAlign>
                     :
-                    <>
+                    <CommentAlign>
                         <Nickname>{item.nickname}</Nickname>
-                        <input type="text" defaultValue={item.content} ref={current_content} />
-                        <button onClick={(e) => {
-                            e.preventDefault()
-                            dispatch(updateComment({ id: item.id, content: current_content.current.value, nickname: item.nickname }))
-                            setMode("read")
-                            setRefresh(prev => !prev)
-                        }}>등록</button>
-                    </>
+                        <UpdataComment type="text" defaultValue={item.content} ref={current_content} />
+                        <>
+                            <button onClick={(e) => {
+                                e.preventDefault()
+                                dispatch(updateComment({ id: item.id, content: current_content.current.value, nickname: item.nickname }))
+                                setMode("read")
+                            }}>등록</button>
+                            <button onClick={() => {
+                                dispatch(deleteComment(item.id));
+                            }}>삭제</button>
+                        </>
+                    </CommentAlign>
             }
-            <button onClick={() => {
-                dispatch(deleteComment(item.id));
-                setRefresh(prev => !prev)
-            }}>삭제</button>
+
 
 
         </L>
@@ -68,4 +77,22 @@ const UpdataComment = styled.input`
     };
     border: 0;
     border-bottom:1px solid black;
+`
+
+const CommentAlign = styled.div`
+    display: flex;
+    justify-content: space-between
+`
+
+const CommentInfo = styled.div`
+    display:flex;
+    flex-direction:column;
+`
+
+const CommentBtn = styled.div`
+    display: flex;
+    flex-direction:column;
+`
+const DropdownBtn = styled.button`
+    
 `

@@ -1,5 +1,4 @@
 import React from 'react';
-import { useState } from 'react';
 import { useRef } from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,14 +11,9 @@ const CommentList = () => {
     const dispatch = useDispatch();
     const commentInput = useRef();
     console.log(commentData)
-    const [refresh, setRefresh] = useState(true);
-    const [mode, setMode] = useState("read");
-    const current_content = useRef();
-    console.log(refresh)
     useEffect(() => {
         dispatch(loadComment());
-        setRefresh(true)
-    }, [refresh])
+    }, [dispatch])
 
     return (
         <ListBox>
@@ -40,7 +34,7 @@ const CommentList = () => {
             </FormBox>
             <List style={{ padding: '0' }}>
                 {commentData?.map((item) => { return { ...item, mode: "read" } }).map((item) => { // boolean button 누르면 
-                    return <Comment item={item} setRefresh={setRefresh} refresh={refresh} />
+                    return <Comment key={item.id} item={item} />
                 })}
             </List>
         </ListBox>
