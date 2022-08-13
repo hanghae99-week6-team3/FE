@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { server_url } from "../app/slice";
 import Layout from "../components/common/Layout";
 import {
+  GREY,
   RED,
   GREEN,
   StForm,
@@ -14,6 +15,7 @@ import {
   StHelper,
   StAlreadyUser,
 } from "../components/elements/StyledLogin";
+import { isId, isNickname, isPassword } from "../components/elements/regExpLogin";
 
 const Join = () => {
   const navigate = useNavigate();
@@ -40,24 +42,6 @@ const Join = () => {
     const ok = true;
     // const { ok } = await axios.post(`${server_url}/auth`, nickname);
     return ok;
-  };
-
-  //ID 유효성 검사 함수
-  const isId = (value) => {
-    const regExp = /^(?=.*[a-zA-Z])[-a-zA-Z0-9_.]{6,12}$/;
-    return regExp.test(value);
-  };
-
-  //닉네임 유효성 검사 함수
-  const isNickname = (value) => {
-    const regExp = /^(?=.*[a-zA-Z가-힣])[a-zA-Z가-힣]{2,6}$/;
-    return regExp.test(value);
-  };
-
-  //비밀번호 유효성 검사 함수
-  const isPassword = (value) => {
-    const regExp = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%^&*]{8,20}$/;
-    return regExp.test(value);
   };
 
   //onSubmit 함수
@@ -98,7 +82,7 @@ const Join = () => {
           <label>아이디</label>
           <input type="text" autoFocus name="userId" value={joinUser.userId} onChange={onChangeHandler} />
           {!isId(joinUser.userId) ? (
-            <StHelper color={RED}>6~12자의 영문을 포함한 숫자와 일부 특수문자(._-)만 입력 가능합니다.</StHelper>
+            <StHelper color={GREY}>6~12자의 영문을 포함한 숫자와 일부 특수문자(._-)만 입력 가능합니다.</StHelper>
           ) : !checkId() ? (
             <StHelper color={RED}>중복된 아이디 입니다.</StHelper>
           ) : (
@@ -110,7 +94,7 @@ const Join = () => {
           <label>닉네임</label>
           <input type="text" name="nickname" value={joinUser.nickname} onChange={onChangeHandler} />
           {!isNickname(joinUser.nickname) ? (
-            <StHelper color={RED}>2~6자의 영문과 한글만 입력 가능합니다.</StHelper>
+            <StHelper color={GREY}>2~6자의 영문과 한글만 입력 가능합니다.</StHelper>
           ) : !checkNickname() ? (
             <StHelper color={RED}>중복된 닉네임 입니다.</StHelper>
           ) : (
@@ -130,7 +114,7 @@ const Join = () => {
           {isPassword(joinUser.password) ? (
             <StHelper color={GREEN}>사용하실 수 있는 비밀번호입니다.</StHelper>
           ) : (
-            <StHelper color={RED}>
+            <StHelper color={GREY}>
               8~20자, 영문과 숫자를 필수로 포함해야하고 특수문자(!@#$%^&*)도 입력 가능합니다.
             </StHelper>
           )}
@@ -139,7 +123,9 @@ const Join = () => {
         <StInputGroup>
           <label>비밀번호 확인</label>
           <input type="password" name="passwordConfirm" value={joinUser.passwordConfirm} onChange={onChangeHandler} />
-          {joinUser.password === joinUser.passwordConfirm && joinUser.passwordConfirm.length !== 0 ? (
+          {joinUser.passwordConfirm.length === 0 ? (
+            <StHelper color={GREY}>비밀번호를 입력해주세요.</StHelper>
+          ) : joinUser.password === joinUser.passwordConfirm ? (
             <StHelper color={GREEN}>비밀번호가 일치합니다.</StHelper>
           ) : (
             <StHelper color={RED}>비밀번호가 일치하지 않습니다.</StHelper>

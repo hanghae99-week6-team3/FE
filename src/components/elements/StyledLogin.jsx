@@ -1,9 +1,11 @@
 import styled from "styled-components";
 
 //컬러값 상수
+const GREY = "#999";
 const RED = "#ED6055";
 const GREEN = "#34A853";
 
+//폼 박스 스타일
 const StForm = styled.form`
   position: absolute;
 
@@ -15,6 +17,7 @@ const StForm = styled.form`
   transform: translate(-50%, -50%);
 `;
 
+//인풋 그룹(라벨, 인풋, 헬퍼)
 const StInputGroup = styled.div`
   position: relative;
   display: flex;
@@ -30,6 +33,7 @@ const StInputGroup = styled.div`
   }
 `;
 
+//버튼 그룹
 const StButtonGroup = styled.div`
   display: flex;
   margin-top: 20px;
@@ -39,6 +43,7 @@ const StButtonGroup = styled.div`
   }
 `;
 
+//비밀번호 보이게 하기
 const StLock = styled.div`
   position: absolute;
   margin-top: 40px;
@@ -47,12 +52,14 @@ const StLock = styled.div`
   cursor: pointer;
 `;
 
+//헬퍼
 const StHelper = styled.div`
   margin-top: 5px;
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   color: ${(props) => props.color};
 `;
 
+//로그인, 회원가입 이동하는 텍스트
 const StAlreadyUser = styled.span`
   display: inline-block;
   margin-top: 15px;
@@ -65,4 +72,4 @@ const StAlreadyUser = styled.span`
   }
 `;
 
-export { RED, GREEN, StForm, StInputGroup, StButtonGroup, StLock, StHelper, StAlreadyUser };
+export { GREY, RED, GREEN, StForm, StInputGroup, StButtonGroup, StLock, StHelper, StAlreadyUser };
