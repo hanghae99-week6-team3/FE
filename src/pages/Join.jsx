@@ -30,17 +30,17 @@ const Join = () => {
   //아이콘 클릭시 비밀번호 보이게 하기
   const [lock, setLock] = useState(true);
 
-  //ID 중복확인 함수
-  const checkId = (userId) => {
+  //ID 중복확인 함수, 유저 ID값으로 POST 요청하여 중복이 아니면 true, 중복이면 false를 반환함
+  const checkId = (value) => {
     const ok = true;
-    // const { ok } = await axios.post(`${server_url}/auth`, userId);
+    // const { ok } = await axios.post(`${server_url}/auth`, {key: "userId", value});
     return ok;
   };
 
-  //닉네임 중복확인 함수
-  const checkNickname = (nickname) => {
+  //닉네임 중복확인 함수, 유저 닉네임값으로 POST 요청하여 중복이 아니면 true, 중복이면 false를 반환함
+  const checkNickname = (value) => {
     const ok = true;
-    // const { ok } = await axios.post(`${server_url}/auth`, nickname);
+    // const { ok } = await axios.post(`${server_url}/auth`, {key: "nickname", value});
     return ok;
   };
 

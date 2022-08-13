@@ -27,10 +27,9 @@ const Login = () => {
     } else {
       // dispatch(__postLogin(loginUser));
       dispatch(__postLogin());
+      alert("환영합니다!");
     }
   };
-
-  console.log(loginUser);
 
   return (
     <Layout>
