@@ -53,6 +53,7 @@ const commentSlice = createSlice({
     name: 'commentSlice',
     initialState,
     reducers: {
+
     },
     extraReducers: {
         [loadComment.fulfilled]: (state, { payload }) => state = payload,
