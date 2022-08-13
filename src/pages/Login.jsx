@@ -3,21 +3,28 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Layout from "../components/common/Layout";
-import { GREY, StForm, StInputGroup, StButtonGroup, StHelper, StAlreadyUser } from "../components/elements/StyledLogin";
+import { GREY, StForm, StInputGroup, StButtonGroup, StHelper, StNavigate } from "../components/elements/StyledLogin";
 import { isId, isPassword } from "../components/elements/regExpLogin";
 import { __postLogin } from "../app/slice/userSlice";
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  //입력값들을 받을 state의 초기값 설정
+  //백엔드에서 서버 url을 받으면 id값은 지워주자. 목서버는 id를 안넘기면 오류가 나서 넣어뒀다.
   const initialState = { id: 0, userId: "", password: "" };
+
+  //로그인시 POST 요청에 사용할 값을 관리하는 state
   const [loginUser, setLoginUser] = useState(initialState);
 
+  //입력값 변화를 감지하고 state에 업데이트 시켜주는 onChange 함수
   const onChangeHandler = (event) => {
     const { name, value } = event.target;
     setLoginUser({ ...loginUser, [name]: value });
   };
 
+  //로그인시 POST요청을 보낼 함수 (유효성 검사를 통해 서버요청 횟수를 조금 줄였다.)
   const postLogin = (event) => {
     event.preventDefault();
     if (!loginUser.userId.trim() && !loginUser.password.trim()) {
@@ -25,8 +32,8 @@ const Login = () => {
     } else if (!isId(loginUser.userId) || !isPassword(loginUser.password)) {
       alert("올바른 형식이 아닙니다.");
     } else {
-      // dispatch(__postLogin(loginUser));
-      dispatch(__postLogin());
+      // dispatch(__postLogin(loginUser)); //최종에 사용할 코드
+      dispatch(__postLogin()); //url 연결전 테스트 코드
       alert("환영합니다!");
     }
   };
@@ -53,9 +60,9 @@ const Login = () => {
           </button>
         </StButtonGroup>
 
-        <StAlreadyUser>
+        <StNavigate>
           아직 회원이 아니신가요? <span onClick={() => navigate("/join")}>회원가입 하러가기</span>
-        </StAlreadyUser>
+        </StNavigate>
       </StForm>
     </Layout>
   );

@@ -13,7 +13,7 @@ import {
   StButtonGroup,
   StLock,
   StHelper,
-  StAlreadyUser,
+  StNavigate,
 } from "../components/elements/StyledLogin";
 import { isId, isNickname, isPassword } from "../components/elements/regExpLogin";
 
@@ -32,15 +32,15 @@ const Join = () => {
 
   //ID 중복확인 함수, 유저 ID값으로 POST 요청하여 중복이 아니면 true, 중복이면 false를 반환함
   const checkId = (value) => {
-    const ok = true;
-    // const { ok } = await axios.post(`${server_url}/auth`, {key: "userId", value});
+    const ok = true; //url 연결전 테스트 코드
+    // const { ok } = await axios.post(`${server_url}/auth`, {key: "userId", value}); //최종에 사용할 코드
     return ok;
   };
 
   //닉네임 중복확인 함수, 유저 닉네임값으로 POST 요청하여 중복이 아니면 true, 중복이면 false를 반환함
   const checkNickname = (value) => {
-    const ok = true;
-    // const { ok } = await axios.post(`${server_url}/auth`, {key: "nickname", value});
+    const ok = true; //url 연결전 테스트 코드
+    // const { ok } = await axios.post(`${server_url}/auth`, {key: "nickname", value}); //최종에 사용할 코드
     return ok;
   };
 
@@ -139,9 +139,9 @@ const Join = () => {
           </button>
         </StButtonGroup>
 
-        <StAlreadyUser>
+        <StNavigate>
           이미 회원이신가요? <span onClick={() => navigate("/login")}>로그인하러가기</span>
-        </StAlreadyUser>
+        </StNavigate>
       </StForm>
     </Layout>
   );

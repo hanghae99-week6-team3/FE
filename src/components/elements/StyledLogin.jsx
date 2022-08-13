@@ -60,7 +60,7 @@ const StHelper = styled.div`
 `;
 
 //로그인, 회원가입 이동하는 텍스트
-const StAlreadyUser = styled.span`
+const StNavigate = styled.span`
   display: inline-block;
   margin-top: 15px;
   font-size: 0.8rem;
@@ -72,4 +72,4 @@ const StAlreadyUser = styled.span`
   }
 `;
 
-export { GREY, RED, GREEN, StForm, StInputGroup, StButtonGroup, StLock, StHelper, StAlreadyUser };
+export { GREY, RED, GREEN, StForm, StInputGroup, StButtonGroup, StLock, StHelper, StNavigate };
