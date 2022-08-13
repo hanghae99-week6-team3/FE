@@ -1,0 +1,21 @@
+{
+  "product": [
+    {
+      "id": 0,
+      "productId": 1,
+      "category": "test",
+      "title": "json-server",
+      "content": "json-server",
+      "location": "json-server",
+      "price": 30000
+    },
+    {
+      "title": "말안듣는 우리아이 팝니다.",
+      "price": 990,
+      "category": "마우스",
+      "location": "관악구 봉천역 3번출구 앞",
+      "content": "너무 말안들어서 방출합니다. 쿨거래시 무료로 드려요..쥐새끼 닮아서 항목은 마우스로 했습니다. 연락주세요",
+      "id": 1
+    }
+  ]
+}
