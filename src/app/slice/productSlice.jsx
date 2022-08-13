@@ -1,9 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit";
 import { createSlice, createAsyncThunk, current } from "@reduxjs/toolkit";
 import axios from "axios";
 import { server_url } from "./index";
 
-const initialState = []
 export const addProduct = createAsyncThunk(
   "addProduct",
   async (payload, thunkAPI) => {
@@ -18,20 +16,14 @@ export const addProduct = createAsyncThunk(
   }
 );
 
-const productSlice = createSlice({
-    name: 'productSlice',
-    initialState,
-    reducers: {
 const initialState = [];
 
-    }
-})
 const productSlice = createSlice({
   name: "productSlice",
   initialState,
   reducers: {},
 
-export default productSlice;export default productSlice;export default productSlice;  extraReducers: {
+  extraReducers: {
     [addProduct.fulfilled]: (state, { payload }) => console.log(payload),
   },
 });

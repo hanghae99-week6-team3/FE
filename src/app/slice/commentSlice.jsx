@@ -49,19 +49,20 @@ export const updateComment = createAsyncThunk('updateComment',
 
 const initialState = []
 
-const commentSlice = createSlice({
-    name: 'commentSlice',
-    initialState,
-    reducers: {
 
-    },
+const commentSlice = createSlice({
+    name: "commentSlice",
+    initialState,
+    reducers: {},
     extraReducers: {
         [loadComment.fulfilled]: (state, { payload }) => state = payload,
         [addComment.fulfilled]: (state, { payload }) => state = payload,
         [deleteComment.fulfilled]: (state, { payload }) => current(state).filter((item) => item.id !== payload),
         [updateComment.fulfilled]: (state, { payload }) => current(state).map((item) => item.id === payload.id ? { ...item, content: payload.content } : item)
     }
+});
 
-})
+
+
 
 export default commentSlice;
