@@ -39,5 +39,20 @@
       "nickname": "종현",
       "id": 5
     }
+  ],
+  "login": {
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+  },
+  "comment": [
+    {
+      "id": 0,
+      "content": "",
+      "nickname": ""
+    },
+    {
+      "content": "123123",
+      "nickname": "종현",
+      "id": 1
+    }
   ]
 }
