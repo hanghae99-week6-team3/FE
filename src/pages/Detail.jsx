@@ -1,11 +1,12 @@
 import React from "react";
-// import Header from "../components/common/Header";
+import CommentList from '../components/CommentList';
 import Layout from "../components/common/Layout";
+import Header from '../components/common/Header';
 
 const Detail = () => {
   return (
     <>
-      {/* <Header /> */}
+      <Header></Header>
       <Layout>
         <div>
           <img
@@ -26,6 +27,7 @@ const Detail = () => {
           <button>수정</button>
           <button>삭제</button>
         </div>
+        <CommentList />
       </Layout>
     </>
   );
