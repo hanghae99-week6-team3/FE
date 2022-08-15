@@ -5,12 +5,13 @@ import jwt_decode from "jwt-decode"; //jwt토큰 decode를 해주는 패키지
 
 //현재 로그인한 user를 관리하는 slice의 초기값
 const initialState = {
-  users: {},
+  user: {},
+  isAuth: false,
   error: null,
 };
 
 //헤더에 jwtToken을 포함시키기
-const setAuthToken = (token) => {
+export const setAuthToken = (token) => {
   if (token) {
     axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   } else {
@@ -19,7 +20,7 @@ const setAuthToken = (token) => {
 };
 
 //userId와 password로 POST 요청하여 jwt토큰을 받아오는 함수
-const __postLogin = createAsyncThunk("/login", async (value, thunkAPI) => {
+export const __postLogin = createAsyncThunk("/login", async (value, thunkAPI) => {
   try {
     // const { data } = await axios.post(`${server_url}/login`, value); //최종에 사용할 코드
     const { data } = await axios.get(`${server_url}login`); //url 받기 전 테스트 코드
@@ -35,10 +36,16 @@ const __postLogin = createAsyncThunk("/login", async (value, thunkAPI) => {
 const userSlice = createSlice({
   name: "userSlice",
   initialState,
-  reducers: {},
+  reducers: {
+    currentUser: (state, action) => {
+      state.user = action.payload;
+      state.isAuth = true;
+    },
+  },
   extraReducers: {
     [__postLogin.fulfilled]: (state, action) => {
-      state.users = action.payload;
+      state.user = action.payload;
+      state.isAuth = true;
     },
     [__postLogin.rejected]: (state, action) => {
       state.error = action.payload;
@@ -46,5 +53,5 @@ const userSlice = createSlice({
   },
 });
 
-export { setAuthToken, __postLogin };
+export const { currentUser } = userSlice.actions;
 export default userSlice;
