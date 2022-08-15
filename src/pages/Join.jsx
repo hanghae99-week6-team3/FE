@@ -16,6 +16,11 @@ import {
   StNavigate,
 } from "../components/elements/StyledLogin";
 import { isId, isNickname, isPassword } from "../components/elements/regExpLogin";
+import FloatingLabel from "react-bootstrap/FloatingLabel";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Join = () => {
   const navigate = useNavigate();
@@ -60,7 +65,7 @@ const Join = () => {
       alert("회원가입을 축하합니다!");
       navigate("/login");
     } else {
-      alert("올바른 값을 입력해주세요.");
+      alert("양식이 올바르지 않습니다.");
     }
   };
 
@@ -79,8 +84,16 @@ const Join = () => {
     <Layout>
       <StForm onSubmit={onSubmitHandler}>
         <StInputGroup>
-          <label>아이디</label>
-          <input type="text" autoFocus name="userId" value={joinUser.userId} onChange={onChangeHandler} />
+          <FloatingLabel controlId="floatingInput" label="아이디">
+            <Form.Control
+              type="text"
+              autoFocus
+              name="userId"
+              value={joinUser.userId}
+              onChange={onChangeHandler}
+              placeholder="아이디"
+            />
+          </FloatingLabel>
           {!isId(joinUser.userId) ? (
             <StHelper color={GREY}>6~12자의 영문을 포함한 숫자와 일부 특수문자(._-)만 입력 가능합니다.</StHelper>
           ) : !checkId() ? (
@@ -91,8 +104,15 @@ const Join = () => {
         </StInputGroup>
 
         <StInputGroup>
-          <label>닉네임</label>
-          <input type="text" name="nickname" value={joinUser.nickname} onChange={onChangeHandler} />
+          <FloatingLabel controlId="floatingInput" label="닉네임">
+            <Form.Control
+              type="text"
+              name="nickname"
+              value={joinUser.nickname}
+              onChange={onChangeHandler}
+              placeholder="닉네임"
+            />
+          </FloatingLabel>
           {!isNickname(joinUser.nickname) ? (
             <StHelper color={GREY}>2~6자의 영문과 한글만 입력 가능합니다.</StHelper>
           ) : !checkNickname() ? (
@@ -103,14 +123,18 @@ const Join = () => {
         </StInputGroup>
 
         <StInputGroup>
-          <label>비밀번호</label>
-          <input
-            type={lock ? "password" : "text"}
-            name="password"
-            value={joinUser.password}
-            onChange={onChangeHandler}
-          />
-          <StLock onClick={() => setLock(!lock)}>🔒</StLock>
+          <FloatingLabel controlId="floatingPassword" label="비밀번호">
+            <Form.Control
+              type={lock ? "password" : "text"}
+              name="password"
+              value={joinUser.password}
+              onChange={onChangeHandler}
+              placeholder="비밀번호"
+            />
+          </FloatingLabel>
+          <StLock onClick={() => setLock(!lock)}>
+            <FontAwesomeIcon icon={faEye} />
+          </StLock>
           {isPassword(joinUser.password) ? (
             <StHelper color={GREEN}>사용하실 수 있는 비밀번호입니다.</StHelper>
           ) : (
@@ -121,8 +145,15 @@ const Join = () => {
         </StInputGroup>
 
         <StInputGroup>
-          <label>비밀번호 확인</label>
-          <input type="password" name="passwordConfirm" value={joinUser.passwordConfirm} onChange={onChangeHandler} />
+          <FloatingLabel controlId="floatingPassword" label="비밀번호 확인">
+            <Form.Control
+              type="password"
+              name="passwordConfirm"
+              value={joinUser.passwordConfirm}
+              onChange={onChangeHandler}
+              placeholder="비밀번호 확인"
+            />
+          </FloatingLabel>
           {joinUser.passwordConfirm.length === 0 ? (
             <StHelper color={GREY}>비밀번호를 입력해주세요.</StHelper>
           ) : joinUser.password === joinUser.passwordConfirm ? (
@@ -133,14 +164,16 @@ const Join = () => {
         </StInputGroup>
 
         <StButtonGroup>
-          <button type="submit">회원가입</button>
-          <button type="button" onClick={() => navigate("/")}>
+          <Button variant="success" type="submit">
+            회원가입
+          </Button>
+          <Button variant="outline-success" type="button" onClick={() => navigate("/")}>
             취소
-          </button>
+          </Button>
         </StButtonGroup>
 
         <StNavigate>
-          이미 회원이신가요? <span onClick={() => navigate("/login")}>로그인하러가기</span>
+          이미 회원이신가요? <span onClick={() => navigate("/login")}>로그인 하러가기</span>
         </StNavigate>
       </StForm>
     </Layout>

@@ -6,6 +6,9 @@ import Layout from "../components/common/Layout";
 import { GREY, StForm, StInputGroup, StButtonGroup, StHelper, StNavigate } from "../components/elements/StyledLogin";
 import { isId, isPassword } from "../components/elements/regExpLogin";
 import { __postLogin } from "../app/slice/userSlice";
+import FloatingLabel from "react-bootstrap/FloatingLabel";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -42,22 +45,39 @@ const Login = () => {
     <Layout>
       <StForm onSubmit={postLogin}>
         <StInputGroup>
-          <label>아이디</label>
-          <input type="text" autoFocus name="userId" value={loginUser.userId} onChange={onChangeHandler} />
+          <FloatingLabel controlId="floatingInput" label="아이디">
+            <Form.Control
+              type="text"
+              autoFocus
+              name="userId"
+              value={loginUser.userId}
+              onChange={onChangeHandler}
+              placeholder="아이디"
+            />
+          </FloatingLabel>
           {!loginUser.userId ? <StHelper color={GREY}>아이디를 입력하세요.</StHelper> : null}
         </StInputGroup>
 
         <StInputGroup>
-          <label>비밀번호</label>
-          <input type="password" name="password" value={loginUser.password} onChange={onChangeHandler} />
+          <FloatingLabel controlId="floatingPassword" label="비밀번호">
+            <Form.Control
+              type="password"
+              name="password"
+              value={loginUser.password}
+              onChange={onChangeHandler}
+              placeholder="비밀번호"
+            />
+          </FloatingLabel>
           {!loginUser.password ? <StHelper color={GREY}>비밀번호를 입력하세요.</StHelper> : null}
         </StInputGroup>
 
         <StButtonGroup>
-          <button type="submit">로그인</button>
-          <button type="button" onClick={() => navigate("/")}>
+          <Button variant="success" type="submit">
+            로그인
+          </Button>
+          <Button variant="outline-success" type="button" onClick={() => navigate("/")}>
             취소
-          </button>
+          </Button>
         </StButtonGroup>
 
         <StNavigate>
