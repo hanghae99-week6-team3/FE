@@ -68,11 +68,7 @@ const Write = () => {
   return (
     <>
       <WriteContainer>
-        <PictureCanvas>
-          {imageSrc && (
-            <img src={imageSrc} width="100%" height="100%" alt="preview-img" />
-          )}
-        </PictureCanvas>
+        <PictureCanvas>{imageSrc && <img src={imageSrc} width="100%" height="100%" alt="preview-img" />}</PictureCanvas>
         <WriteForm onSubmit={onSubmitHandler}>
           <ImgUploadBtn>
             <Label for="pic">사진 선택📸</Label>
@@ -97,15 +93,8 @@ const Write = () => {
 
           {!isTitle ? <CheckFail>너무 짧은 제목이네요!</CheckFail> : null}
 
-          <SelectCategory
-            onChange={CategorySelect}
-            value={SelectCategory.value}
-          >
-            <option
-              value="select"
-              selected
-              style={{ display: "none", fontWeight: "bold" }}
-            >
+          <SelectCategory onChange={CategorySelect} value={SelectCategory.value}>
+            <option value="select" selected style={{ display: "none", fontWeight: "bold" }}>
               품목이 무엇인가요?
             </option>
             <option value="노트북">노트북</option>

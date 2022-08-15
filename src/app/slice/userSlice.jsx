@@ -22,7 +22,7 @@ const setAuthToken = (token) => {
 const __postLogin = createAsyncThunk("/login", async (value, thunkAPI) => {
   try {
     // const { data } = await axios.post(`${server_url}/login`, value); //최종에 사용할 코드
-    const { data } = await axios.get(`${server_url}/login`); //url 받기 전 테스트 코드
+    const { data } = await axios.get(`${server_url}login`); //url 받기 전 테스트 코드
     const token = data.token;
     localStorage.setItem("jwtToken", token); //받아온 jwt값을 jwtToken이라는 key값과 함께 로컬 스토리지에 저장
     setAuthToken(token); //HTTP 헤더에 받아온 jwt값 넘기기
