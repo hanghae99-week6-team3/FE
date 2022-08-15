@@ -29,6 +29,7 @@ const CommentList = () => {
                         } else {
                             dispatch(addComment({ content: commentInput.current.value, nickname: "종현" }));
                         }
+                        commentInput.current.value = "";
                     }}>등록</AddCommentBtn>
                 </Form>
             </FormBox>
@@ -45,7 +46,6 @@ export default CommentList;
 
 const ListBox = styled.div`
     width: 100%;
-    /* background-color: aqua; */
     margin: auto;
 `
 const Form = styled.form`
@@ -87,6 +87,5 @@ const AddCommentBtn = styled.button`
 
 const List = styled.div`
     height: 30em;
-    /* background-color: orange; */
 `
 

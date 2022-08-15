@@ -36,18 +36,25 @@ const Comment = ({ item }) => {
                     </CommentAlign>
                     :
                     <CommentAlign>
-                        <Nickname>{item.nickname}</Nickname>
-                        <UpdataComment type="text" defaultValue={item.content} ref={current_content} />
-                        <>
-                            <button onClick={(e) => {
-                                e.preventDefault()
-                                dispatch(updateComment({ id: item.id, content: current_content.current.value, nickname: item.nickname }))
-                                setMode("read")
-                            }}>등록</button>
-                            <button onClick={() => {
-                                dispatch(deleteComment(item.id));
-                            }}>삭제</button>
-                        </>
+                        <CommentInfo>
+                            <Nickname>{item.nickname}</Nickname>
+                            <UpdataComment type="text" defaultValue={item.content} ref={current_content} />
+                        </CommentInfo>
+                        <DropdwonBox>
+                            <DropdownBtn>
+                                View More
+                            </DropdownBtn>
+                            <CommentBtn>
+                                <button onClick={(e) => {
+                                    e.preventDefault()
+                                    dispatch(updateComment({ id: item.id, content: current_content.current.value, nickname: item.nickname }))
+                                    setMode("read")
+                                }}>등록</button>
+                                <button onClick={() => {
+                                    setMode("read")
+                                }}>취소</button>
+                            </CommentBtn>
+                        </DropdwonBox>
                     </CommentAlign>
             }
 
@@ -59,32 +66,60 @@ const Comment = ({ item }) => {
 
 export default Comment;
 
-const DropdwonBox = styled.div`
-    position: relative;
-    display: inline-block;
-`
 
 
 const L = styled.li`
     list-style:none;
-    width: 40em;
+    width: 80%;
 `
 
-const Nickname = styled.span`
+const Nickname = styled.p`
+    width: 80%;
     margin: 1em;
+`
+const CommentInfo = styled.div`
+    display:flex;
+    flex-direction:column;
+    width: 100%;
+`
+
+const CommentBtn = styled.div`
+    display: none;
+    position: absolute;
+    z-index: 1;
+
+`
+
+const DropdwonBox = styled.div`
+    position: relative;
+    display: flex;
+    align-items: center;
+    &:hover ${CommentBtn}{
+        display: block;
+    }
+`
+
+
+
+const DropdownBtn = styled.button`
+
 `
 
 const Content = styled.span`
+    display: flex;
+    flex-wrap: wrap;
     margin: 1em;
-    width: 10em;
+    width: 90%;
 `
 
-const UpdataComment = styled.input`
+const UpdataComment = styled.textarea`
     &:focus {
         outline:0
     };
+    margin: 1em;
     border: 0;
     border-bottom:1px solid black;
+    width: 90%;
 `
 
 const CommentAlign = styled.div`
@@ -92,25 +127,3 @@ const CommentAlign = styled.div`
     justify-content: space-between
 `
 
-const CommentInfo = styled.div`
-    display:flex;
-    flex-direction:column;
-`
-
-const CommentBtn = styled.div`
-    /* display: none; */
-    position: absolute;
-    z-index: 1;
-    background-color: black;
-
-`
-
-
-
-
-
-const DropdownBtn = styled.button`
-    &:hover { 
-        background-color:white;
-    }
-`
