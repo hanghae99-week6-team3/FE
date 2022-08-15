@@ -16,14 +16,28 @@
       "location": "관악구 봉천역 3번출구 앞",
       "content": "너무 말안들어서 방출합니다. 쿨거래시 무료로 드려요..쥐새끼 닮아서 항목은 마우스로 했습니다. 연락주세요",
       "id": 1
+    }
+  ],
+  "comment": [
+    {
+      "content": "gd",
+      "nickname": "종현",
+      "id": 2
     },
     {
-      "title": "fsdafasd",
-      "price": 1111111111111,
-      "category": "노트북",
-      "location": "fsdafsadfa",
-      "content": "dsafdsa",
-      "id": 2
+      "content": "gd",
+      "nickname": "종현",
+      "id": 3
+    },
+    {
+      "content": "gd",
+      "nickname": "종현",
+      "id": 4
+    },
+    {
+      "content": "gd",
+      "nickname": "종현",
+      "id": 5
     }
   ]
 }

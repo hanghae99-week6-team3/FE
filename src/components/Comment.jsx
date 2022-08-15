@@ -19,17 +19,19 @@ const Comment = ({ item }) => {
                             <Nickname>{item.nickname}</Nickname>
                             <Content>{item.content}</Content>
                         </CommentInfo>
-                        <DropdownBtn>
-                            View More
-                        </DropdownBtn>
-                        <CommentBtn>
-                            <button onClick={() => {
-                                setMode("modify")
-                            }}>수정</button>
-                            <button onClick={() => {
-                                dispatch(deleteComment(item.id));
-                            }}>삭제</button>
-                        </CommentBtn>
+                        <DropdwonBox>
+                            <DropdownBtn>
+                                View More
+                            </DropdownBtn>
+                            <CommentBtn>
+                                <button onClick={() => {
+                                    setMode("modify")
+                                }}>수정</button>
+                                <button onClick={() => {
+                                    dispatch(deleteComment(item.id));
+                                }}>삭제</button>
+                            </CommentBtn>
+                        </DropdwonBox>
 
                     </CommentAlign>
                     :
@@ -56,6 +58,12 @@ const Comment = ({ item }) => {
 };
 
 export default Comment;
+
+const DropdwonBox = styled.div`
+    position: relative;
+    display: inline-block;
+`
+
 
 const L = styled.li`
     list-style:none;
@@ -90,9 +98,19 @@ const CommentInfo = styled.div`
 `
 
 const CommentBtn = styled.div`
-    display: flex;
-    flex-direction:column;
+    /* display: none; */
+    position: absolute;
+    z-index: 1;
+    background-color: black;
+
 `
+
+
+
+
+
 const DropdownBtn = styled.button`
-    
+    &:hover { 
+        background-color:white;
+    }
 `
