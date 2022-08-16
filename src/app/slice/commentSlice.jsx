@@ -2,23 +2,25 @@ import { createSlice, createAsyncThunk, current } from "@reduxjs/toolkit";
 import axios from 'axios';
 import { server_url } from '.';
 
-export const loadComment = createAsyncThunk('loadComment',
-    async (payload, thunkAPI) => {
-        try {
-            const { data } = await axios.get(`${server_url}comment`)
-            return thunkAPI.fulfillWithValue(data)
-        } catch (error) {
-            return thunkAPI.rejectWithValue(error)
-        }
-    }
-)
+// export const loadComment = createAsyncThunk('loadComment',
+//     async (payload, thunkAPI) => {
+//         try {
+//             const data = await axios.get(`${server_url}comment`)
+//             console.log(data)
+//             // return thunkAPI.fulfillWithValue(data)
+//         } catch (error) {
+//             return thunkAPI.rejectWithValue(error)
+//         }
+//     }
+// )
 
 export const addComment = createAsyncThunk('addComment',
     async (payload, thunkAPI) => {
         try {
-            await axios.post(`${server_url}comment`, payload)
-            const { data } = await axios.get(`${server_url}comment`)
-            return thunkAPI.fulfillWithValue(data)
+            const data = await axios.post(`${server_url}product/comment/${payload.productId}`, payload.content)
+            // const { data } = await axios.get(`${server_url}comment`)
+            console.log(data)
+            // return thunkAPI.fulfillWithValue(data)
         } catch (error) {
             return thunkAPI.rejectWithValue(error)
         }
@@ -55,7 +57,7 @@ const commentSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: {
-        [loadComment.fulfilled]: (state, { payload }) => state = payload,
+        // [loadComment.fulfilled]: (state, { payload }) => state = payload,
         [addComment.fulfilled]: (state, { payload }) => state = payload,
         [deleteComment.fulfilled]: (state, { payload }) => current(state).filter((item) => item.id !== payload),
         [updateComment.fulfilled]: (state, { payload }) => current(state).map((item) => item.id === payload.id ? { ...item, content: payload.content } : item)

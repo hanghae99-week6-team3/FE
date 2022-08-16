@@ -2,17 +2,20 @@ import React from 'react';
 import { useRef } from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { addComment, loadComment } from '../app/slice/commentSlice';
 import Comment from './Comment';
 
 const CommentList = () => {
     const commentData = useSelector(state => state.comment);
+    const param = useParams();
+    console.log(param.productId)
     const dispatch = useDispatch();
     const commentInput = useRef();
     console.log(commentData)
     useEffect(() => {
-        dispatch(loadComment());
+        // dispatch(loadComment());
     }, [dispatch])
 
     return (
@@ -27,7 +30,7 @@ const CommentList = () => {
                         if (commentInput.current.value === '') {
                             return alert('댓글을 입력해주세요 !')
                         } else {
-                            dispatch(addComment({ content: commentInput.current.value, nickname: "종현" }));
+                            dispatch(addComment({ content: commentInput.current.value, productId: param.productId }));
                         }
                         commentInput.current.value = "";
                     }}>등록</AddCommentBtn>

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../../app/slice/userSlice";
+import { Button } from 'react-bootstrap';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -16,22 +17,22 @@ const Header = () => {
   };
   return (
     <HeaderBar>
-      <Link to={"/"}>
-        <h1 style={{ padding: "0", marginLeft: "3em", display: "inline", textDecoration: "none", color: "black" }}>
-          SAMJO
+      <Link to={"/"} style={{ textDecoration: "none" }}>
+        <h1 style={{ padding: "0", marginLeft: "3em", display: "inline", color: "black" }}>
+          삼조전자
         </h1>
       </Link>
       <div style={{ marginRight: "10em" }}>
         <Link to={"/write"}>
-          <button>작성하기</button>
+          <Button variant="outline-success">작성하기</Button>
         </Link>
         <Link to={"/login"}>
-          <button>로그인</button>
+          <Button variant="outline-success">로그인</Button>
         </Link>
         <Link to={"/join"}>
-          <button>회원가입</button>
+          <Button variant="outline-success">회원가입</Button>
         </Link>
-        <button onClick={onLogoutHandler}>로그아웃</button>
+        <Button variant="outline-success" onClick={onLogoutHandler}>로그아웃</Button>
       </div>
     </HeaderBar>
   );
@@ -48,5 +49,9 @@ const HeaderBar = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  text-decoration: none;
+  font-weight: bold;
 `;
+
+
 
