@@ -117,7 +117,7 @@ const Write = () => {
           </SelectCategory>
           {!isCategory ? <CheckFail>품목은 필수항목이에요!</CheckFail> : null}
           <InputLocation
-            placeholder="거래 희망 지역은 어디인가요?  (ex : 역삼역 3번출구)"
+            placeholder="거래 희망 지역은 어디인가요?  (ex : 역삼역 2번출구)"
             name="location"
             value={EditProduct.location}
             onChange={onChangeHandler}
