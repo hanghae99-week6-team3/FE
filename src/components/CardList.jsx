@@ -16,15 +16,14 @@ const Cardlist = () => {
   return (
     <Listwrap>
       {productData
-
         .map((card) => (
-          <Card key={card.id}>
-            <CardImg />
+          <Card key={card.product.productId}>
+            <CardImg src={card.product.img} />
             <CardInfo>
-              <CardTitle>{card.title}</CardTitle>
+              <CardTitle>{card.product.title}</CardTitle>
               <CardBottom>
-                <CardCategory>{card.category}</CardCategory>
-                <CardPrice>{card.price} 원</CardPrice>
+                <CardCategory>{card.product.category}</CardCategory>
+                <CardPrice>{card.product.price} 원</CardPrice>
                 <CardLike>👍 12</CardLike>
                 <CardComment>❤ 45</CardComment>
               </CardBottom>
@@ -59,7 +58,7 @@ const Card = styled.div`
   border: 1px solid skyblue;
   margin: 0 0 1.25em 1.25em;
 `;
-const CardImg = styled.div`
+const CardImg = styled.img`
   width: 22em;
   height: 22em;
   border: 1px solid green;
