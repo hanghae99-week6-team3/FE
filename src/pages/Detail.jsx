@@ -1,9 +1,6 @@
-import React from "react";
-import CommentList from '../components/CommentList';
 import React, { useEffect, useState } from "react";
 import CommentList from "../components/CommentList";
 import Layout from "../components/common/Layout";
-import Header from '../components/common/Header';
 import Header from "../components/common/Header";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
@@ -78,13 +75,6 @@ const Detail = () => {
           />
         </div>
 
-        <div>
-          <div>제목</div>
-          <div>카테고리</div>
-          <div>거래장소</div>
-          <div>가격</div>
-          <div>글내용</div>
-        </div>
         {editMode ? (
           <>
             <StCard>
@@ -118,11 +108,6 @@ const Detail = () => {
                   <input type="text" name="location" value={updateProduct.location} onChange={onChangeHnadler} />
                 </div>
 
-        <div>
-          <button>수정</button>
-          <button>삭제</button>
-        </div>
-        <CommentList />
                 <div>
                   <Button variant="success" onClick={onSaveHandler}>
                     완료

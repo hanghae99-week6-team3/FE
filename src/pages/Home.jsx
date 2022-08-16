@@ -4,7 +4,6 @@ import Cardlist from "../components/CardList";
 import Layout from "../components/common/Layout";
 
 const Home = () => {
-  return <Layout></Layout>;
   return (
     <Layout>
       <Cardlist></Cardlist>

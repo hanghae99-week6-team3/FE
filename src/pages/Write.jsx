@@ -7,7 +7,6 @@ import { useDispatch } from "react-redux";
 import { addProduct } from "../app/slice/productSlice";
 import Layout from "../components/common/Layout";
 import AWS from "aws-sdk";
-import S3upload from 'react-aws-s3';
 import S3upload from "react-aws-s3";
 
 window.Buffer = window.Buffer || require("buffer").Buffer;
@@ -20,18 +19,15 @@ const Write = () => {
     content: "",
     location: "",
     price: null,
-    img: ''
     img: "",
   };
 
   const [EditProduct, setEditProduct] = useState(initialState);
   const [Category, setCategory] = useState("");
 
-  const [imageSrc, setImageSrc] = useState('');
   const navi = useNavigate();
   const [imageSrc, setImageSrc] = useState("");
   const [sendImg, setSendImg] = useState({});
-  const [imgURL, setImgURL] = useState('')
   const [imgURL, setImgURL] = useState("");
 
   const dispatch = useDispatch();
@@ -47,10 +43,8 @@ const Write = () => {
     });
   };
 
-
   const onSubmitHandler = (e) => {
     e.preventDefault();
-
     navi("/");
 
     dispatch(
@@ -60,7 +54,6 @@ const Write = () => {
         category: Category,
         location: EditProduct.location,
         content: EditProduct.content,
-        img: imgURL
         img: imgURL,
       })
     );
@@ -86,12 +79,9 @@ const Write = () => {
 
   //
 
-
   return (
-    <>
     <Layout>
       <WriteContainer>
-        <PictureCanvas>{imageSrc && <img src={imageSrc} width="100%" height="100%" alt="preview-img" />}</PictureCanvas>
         <PictureCanvas>
           {imageSrc && (
             <img src={imageSrc} width="100%" height="100%" alt="preview-img" />
@@ -108,8 +98,6 @@ const Write = () => {
             value=""
             accept="image/*"
             onChange={(e) => {
-              e.preventDefault()
-              let file = e.target.files[0]
               e.preventDefault();
               let file = e.target.files[0];
               let newFileName = e.target.files[0].name;
@@ -118,23 +106,9 @@ const Write = () => {
                 secretAccessKey: process.env.REACT_APP_SECRET_ACCESS_KEY,
                 bucketName: process.env.REACT_APP_BUCKET_NAME,
                 region: process.env.REACT_APP_REGION,
-              }
               };
               const s3Client = new S3upload(config);
               // console.log(s3Client)
-              s3Client.uploadFile(sendImg.file, sendImg.newFileName).then(async (data) => {
-                if (data.status === 204) {
-                  let imgUrl = data.location;
-                  setImgURL(imgUrl)
-                  // console.log(imgUrl)
-                  //json-server 등록
-                  // await axios.post("http://localhost:3001/img", { url: imgUrl });
-                  // alert("등록이 완료되었습니다!");
-                  // return imgUrl
-                }
-              });
-              setSendImg({ file, newFileName })
-              encodeFileToBase64(file)
               s3Client
                 .uploadFile(sendImg.file, sendImg.newFileName)
                 .then(async (data) => {
@@ -163,8 +137,6 @@ const Write = () => {
 
           {!isTitle ? <CheckFail>너무 짧은 제목이네요!</CheckFail> : null}
 
-          <SelectCategory onChange={CategorySelect} value={SelectCategory.value}>
-            <option value="select" selected style={{ display: "none", fontWeight: "bold" }}>
           <SelectCategory
             onChange={CategorySelect}
             value={SelectCategory.value}
@@ -181,7 +153,6 @@ const Write = () => {
           </SelectCategory>
           {!isCategory ? <CheckFail>품목은 필수항목이에요!</CheckFail> : null}
           <InputLocation
-            placeholder="거래 희망 지역은 어디인가요?  (ex : 역삼역 3번출구)"
             placeholder="거래 희망 지역은 어디인가요?  (ex : 역삼역 2번출구)"
             name="location"
             value={EditProduct.location}
@@ -214,7 +185,6 @@ const Write = () => {
           </ButtonWrap>
         </WriteForm>
       </WriteContainer>
-    </>
     </Layout>
   );
 };

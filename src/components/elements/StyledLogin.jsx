@@ -9,7 +9,6 @@ const GREEN = "#34A853";
 const StForm = styled.form`
   position: absolute;
 
-  width: 400px;
   width: 450px;
   padding: 30px;
   background-color: white;
@@ -23,10 +22,6 @@ const StInputGroup = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-
-  label {
-    font-weight: 700;
-  }
 
   label,
   input {
@@ -48,8 +43,6 @@ const StButtonGroup = styled.div`
 //비밀번호 보이게 하기
 const StLock = styled.div`
   position: absolute;
-  margin-top: 40px;
-  margin-right: 5px;
   margin-top: 27px;
   margin-right: 14px;
   right: 0;
@@ -68,7 +61,6 @@ const StNavigate = styled.span`
   display: inline-block;
   width: 100%;
   margin-top: 15px;
-  font-size: 0.8rem;
   font-size: 0.9rem;
   text-align: center;
   color: #999;

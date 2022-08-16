@@ -16,7 +16,6 @@ const Login = () => {
 
   //입력값들을 받을 state의 초기값 설정
   //백엔드에서 서버 url을 받으면 id값은 지워주자. 목서버는 id를 안넘기면 오류가 나서 넣어뒀다.
-  const initialState = { id: 0, userId: "", password: "" };
   const initialState = { userId: "", password: "" };
 
   //로그인시 POST 요청에 사용할 값을 관리하는 state
@@ -36,8 +35,6 @@ const Login = () => {
     } else if (!isId(loginUser.userId) || !isPassword(loginUser.password)) {
       alert("올바른 형식이 아닙니다.");
     } else {
-      // dispatch(__postLogin(loginUser)); //최종에 사용할 코드
-      dispatch(__postLogin()); //url 연결전 테스트 코드
       dispatch(__postLogin(loginUser)); //최종에 사용할 코드
       alert("환영합니다!");
       navigate("/");
@@ -48,9 +45,6 @@ const Login = () => {
     <Layout>
       <StForm onSubmit={postLogin}>
         <StInputGroup>
-          <label>아이디</label>
-          <input type="text" autoFocus name="userId" value={loginUser.userId} onChange={onChangeHandler} />
-          {!loginUser.userId ? <StHelper color={GREY}>아이디를 입력하세요.</StHelper> : null}
           <FloatingLabel controlId="floatingInput" label="아이디">
             <Form.Control
               type="text"
@@ -65,9 +59,6 @@ const Login = () => {
         </StInputGroup>
 
         <StInputGroup>
-          <label>비밀번호</label>
-          <input type="password" name="password" value={loginUser.password} onChange={onChangeHandler} />
-          {!loginUser.password ? <StHelper color={GREY}>비밀번호를 입력하세요.</StHelper> : null}
           <FloatingLabel controlId="floatingPassword" label="비밀번호">
             <Form.Control
               type="password"
@@ -81,14 +72,11 @@ const Login = () => {
         </StInputGroup>
 
         <StButtonGroup>
-          <button type="submit">로그인</button>
-          <button type="button" onClick={() => navigate("/")}>
           <Button variant="success" type="submit">
             로그인
           </Button>
           <Button variant="outline-success" type="button" onClick={() => navigate("/")}>
             취소
-          </button>
           </Button>
         </StButtonGroup>
 

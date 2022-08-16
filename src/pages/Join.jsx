@@ -27,7 +27,6 @@ const Join = () => {
 
   //입력값들을 받을 state의 초기값 설정
   //백엔드에서 서버 url을 받으면 id값은 지워주자. 목서버는 id를 안넘기면 오류가 나서 넣어뒀다.
-  const initialState = { id: 0, userId: "", nickname: "", password: "", passwordConfirm: "" };
   const initialState = { userId: "", nickname: "", password: "", passwordConfirm: "" };
 
   //입력값들을 관리하는 state
@@ -62,12 +61,10 @@ const Join = () => {
       isPassword(joinUser.password) &&
       joinUser.password === joinUser.passwordConfirm
     ) {
-      postUser(joinUser);
       postUser({ userId: joinUser.userId, nickname: joinUser.nickname, password: joinUser.password });
       alert("회원가입을 축하합니다!");
       navigate("/login");
     } else {
-      alert("올바른 값을 입력해주세요.");
       alert("아이디, 닉네임 및 비밀번호를 다시 확인해주세요");
     }
   };
@@ -80,7 +77,6 @@ const Join = () => {
 
   //입력값을 서버로 전송하는 함수
   const postUser = async (value) => {
-    await axios.post(`${server_url}/join`, value);
     await axios.post(`${server_url}join`, value);
   };
 
@@ -88,8 +84,6 @@ const Join = () => {
     <Layout>
       <StForm onSubmit={onSubmitHandler}>
         <StInputGroup>
-          <label>아이디</label>
-          <input type="text" autoFocus name="userId" value={joinUser.userId} onChange={onChangeHandler} />
           <FloatingLabel controlId="floatingInput" label="아이디">
             <Form.Control
               type="text"
@@ -101,20 +95,15 @@ const Join = () => {
             />
           </FloatingLabel>
           {!isId(joinUser.userId) ? (
-            <StHelper color={GREY}>6~12자의 영문을 포함한 숫자와 일부 특수문자(._-)만 입력 가능합니다.</StHelper>
             <StHelper color={GREY}>6~12자, 영문을 포함하고 숫자와 일부 특수문자(._-) 입력 가능</StHelper>
           ) : !checkId() ? (
-            <StHelper color={RED}>중복된 아이디 입니다.</StHelper>
             <StHelper color={RED}>중복된 아이디 입니다</StHelper>
           ) : (
-            <StHelper color={GREEN}>사용하실 수 있는 아이디입니다.</StHelper>
             <StHelper color={GREEN}>사용하실 수 있는 아이디입니다</StHelper>
           )}
         </StInputGroup>
 
         <StInputGroup>
-          <label>닉네임</label>
-          <input type="text" name="nickname" value={joinUser.nickname} onChange={onChangeHandler} />
           <FloatingLabel controlId="floatingInput" label="닉네임">
             <Form.Control
               type="text"
@@ -125,26 +114,15 @@ const Join = () => {
             />
           </FloatingLabel>
           {!isNickname(joinUser.nickname) ? (
-            <StHelper color={GREY}>2~6자의 영문과 한글만 입력 가능합니다.</StHelper>
             <StHelper color={GREY}>2~6자, 영문과 한글 입력 가능</StHelper>
           ) : !checkNickname() ? (
-            <StHelper color={RED}>중복된 닉네임 입니다.</StHelper>
             <StHelper color={RED}>중복된 닉네임 입니다</StHelper>
           ) : (
-            <StHelper color={GREEN}>사용하실 수 있는 닉네임입니다.</StHelper>
             <StHelper color={GREEN}>사용하실 수 있는 닉네임입니다</StHelper>
           )}
         </StInputGroup>
 
         <StInputGroup>
-          <label>비밀번호</label>
-          <input
-            type={lock ? "password" : "text"}
-            name="password"
-            value={joinUser.password}
-            onChange={onChangeHandler}
-          />
-          <StLock onClick={() => setLock(!lock)}>🔒</StLock>
           <FloatingLabel controlId="floatingPassword" label="비밀번호">
             <Form.Control
               type={lock ? "password" : "text"}
@@ -158,19 +136,13 @@ const Join = () => {
             <FontAwesomeIcon icon={faEye} />
           </StLock>
           {isPassword(joinUser.password) ? (
-            <StHelper color={GREEN}>사용하실 수 있는 비밀번호입니다.</StHelper>
             <StHelper color={GREEN}>사용하실 수 있는 비밀번호입니다</StHelper>
           ) : (
-            <StHelper color={GREY}>
-              8~20자, 영문과 숫자를 필수로 포함해야하고 특수문자(!@#$%^&*)도 입력 가능합니다.
-            </StHelper>
             <StHelper color={GREY}>8~20자, 영문과 숫자를 포함하고 일부 특수문자(!@#$%^&*) 입력 가능</StHelper>
           )}
         </StInputGroup>
 
         <StInputGroup>
-          <label>비밀번호 확인</label>
-          <input type="password" name="passwordConfirm" value={joinUser.passwordConfirm} onChange={onChangeHandler} />
           <FloatingLabel controlId="floatingPassword" label="비밀번호 확인">
             <Form.Control
               type="password"
@@ -181,31 +153,24 @@ const Join = () => {
             />
           </FloatingLabel>
           {joinUser.passwordConfirm.length === 0 ? (
-            <StHelper color={GREY}>비밀번호를 입력해주세요.</StHelper>
             <StHelper color={GREY}>비밀번호를 입력해주세요</StHelper>
           ) : joinUser.password === joinUser.passwordConfirm ? (
-            <StHelper color={GREEN}>비밀번호가 일치합니다.</StHelper>
             <StHelper color={GREEN}>비밀번호가 일치합니다</StHelper>
           ) : (
-            <StHelper color={RED}>비밀번호가 일치하지 않습니다.</StHelper>
             <StHelper color={RED}>비밀번호가 일치하지 않습니다</StHelper>
           )}
         </StInputGroup>
 
         <StButtonGroup>
-          <button type="submit">회원가입</button>
-          <button type="button" onClick={() => navigate("/")}>
           <Button variant="success" type="submit">
             회원가입
           </Button>
           <Button variant="outline-success" type="button" onClick={() => navigate("/")}>
             취소
-          </button>
           </Button>
         </StButtonGroup>
 
         <StNavigate>
-          이미 회원이신가요? <span onClick={() => navigate("/login")}>로그인하러가기</span>
           이미 회원이신가요? <span onClick={() => navigate("/login")}>로그인 하러가기</span>
         </StNavigate>
       </StForm>
