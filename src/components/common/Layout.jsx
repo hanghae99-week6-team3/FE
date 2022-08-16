@@ -10,6 +10,7 @@ const StyledLayout = styled.div`
   margin: 0 auto;
   width: 60rem;
   height: 100vh;
+  border: 1px dashed red;
 `;
 
 export default Layout;
