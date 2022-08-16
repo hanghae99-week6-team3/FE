@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { server_url } from "../app/slice";
 import axios from "axios";
@@ -90,7 +91,6 @@ const Write = () => {
         <WriteForm onSubmit={onSubmitHandler}>
           <ImgUploadBtn>
             <Label for="pic">사진 선택📸</Label>
-            <ImgDeleteBtn>삭제</ImgDeleteBtn>
           </ImgUploadBtn>
           <InputPicture
             id="pic"
@@ -193,6 +193,7 @@ const WriteContainer = styled.div`
   width: 40em;
   height: 51em;
   border: 1px solid red;
+  margin: 0 auto;
   /* margin: 30em 0 30em 0; */
 `;
 
