@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const Header = () => {
     return (
         <HeaderBar>
-            <Link to={'/'}><h1 style={{ padding: '0', marginLeft: '3em', display: 'inline', textDecoration: 'none', color: 'black' }}>SAMJO</h1></Link>
+            <Link to={'/'} style={{ textDecoration: 'none' }}><h1 style={{ padding: '0', marginLeft: '3em', display: 'inline', color: 'black' }}>SAMJO</h1></Link>
             <div style={{ marginRight: '10em' }}>
                 <Link to={'/write'}><button>작성하기</button></Link>
                 <Link to={'/login'}><button>로그인</button></Link>
@@ -25,5 +25,5 @@ const HeaderBar = styled.header`
     background-color: white;
     display: flex;
     align-items: center;
-    justify-content: space-between
+    justify-content: space-between;
 `
