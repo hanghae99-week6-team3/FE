@@ -171,7 +171,7 @@ const Detail = () => {
               </StFooter>
             </StCard>
 
-            {/* <CommentList /> */}
+            <CommentList />
           </>
         )}
       </Layout>

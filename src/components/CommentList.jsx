@@ -15,7 +15,7 @@ const CommentList = () => {
     const commentInput = useRef();
     console.log(commentData)
     useEffect(() => {
-        // dispatch(loadComment());
+        dispatch(loadComment(param.productId));
     }, [dispatch])
 
     return (
