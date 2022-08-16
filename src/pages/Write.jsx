@@ -6,6 +6,10 @@ import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { addProduct } from "../app/slice/productSlice";
 import Layout from "../components/common/Layout";
+import AWS from "aws-sdk";
+import S3upload from "react-aws-s3";
+
+window.Buffer = window.Buffer || require("buffer").Buffer;
 
 const Write = () => {
   const initialState = {
@@ -15,13 +19,16 @@ const Write = () => {
     content: "",
     location: "",
     price: null,
+    img: "",
   };
 
   const [EditProduct, setEditProduct] = useState(initialState);
   const [Category, setCategory] = useState("");
 
-  const [imageSrc, setImageSrc] = useState("");
   const navi = useNavigate();
+  const [imageSrc, setImageSrc] = useState("");
+  const [sendImg, setSendImg] = useState({});
+  const [imgURL, setImgURL] = useState("");
 
   const dispatch = useDispatch();
 
@@ -39,6 +46,7 @@ const Write = () => {
   const onSubmitHandler = (e) => {
     e.preventDefault();
     navi("/");
+
     dispatch(
       addProduct({
         title: EditProduct.title,
@@ -46,6 +54,7 @@ const Write = () => {
         category: Category,
         location: EditProduct.location,
         content: EditProduct.content,
+        img: imgURL,
       })
     );
   };
@@ -68,6 +77,8 @@ const Write = () => {
 
   const isPrice = EditProduct.price <= 0 ? false : true;
 
+  //
+
   return (
     <Layout>
       <WriteContainer>
@@ -87,7 +98,32 @@ const Write = () => {
             value=""
             accept="image/*"
             onChange={(e) => {
-              encodeFileToBase64(e.target.files[0]);
+              e.preventDefault();
+              let file = e.target.files[0];
+              let newFileName = e.target.files[0].name;
+              const config = {
+                accessKeyId: process.env.REACT_APP_ACCESS_KEY_ID,
+                secretAccessKey: process.env.REACT_APP_SECRET_ACCESS_KEY,
+                bucketName: process.env.REACT_APP_BUCKET_NAME,
+                region: process.env.REACT_APP_REGION,
+              };
+              const s3Client = new S3upload(config);
+              // console.log(s3Client)
+              s3Client
+                .uploadFile(sendImg.file, sendImg.newFileName)
+                .then(async (data) => {
+                  if (data.status === 204) {
+                    let imgUrl = data.location;
+                    setImgURL(imgUrl);
+                    // console.log(imgUrl)
+                    //json-server 등록
+                    // await axios.post("http://localhost:3001/img", { url: imgUrl });
+                    // alert("등록이 완료되었습니다!");
+                    // return imgUrl
+                  }
+                });
+              setSendImg({ file, newFileName });
+              encodeFileToBase64(file);
             }}
           />
 
