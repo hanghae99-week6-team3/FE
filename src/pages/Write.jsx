@@ -1,7 +1,11 @@
+<<<<<<< HEAD
 import React, { useState } from "react";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+=======
+import React, { useEffect, useState } from "react";
+>>>>>>> 9217655874034229982a5421b7566c9e10aa6302
 import { useNavigate } from "react-router-dom";
 import { server_url } from "../app/slice";
 import axios from "axios";
@@ -46,6 +50,25 @@ const Write = () => {
     });
   };
 
+  useEffect(() => {
+    const config = {
+      accessKeyId: process.env.REACT_APP_ACCESS_KEY_ID,
+      secretAccessKey: process.env.REACT_APP_SECRET_ACCESS_KEY,
+      bucketName: process.env.REACT_APP_BUCKET_NAME,
+      region: process.env.REACT_APP_REGION,
+    };
+
+    const s3Client = new S3upload(config);
+
+    s3Client.uploadFile(sendImg.file, sendImg.newFileName).then((data) => {
+      if (data.status === 204) {
+        let imgUrl = data.location;
+        console.log(data)
+        setImgURL(imgUrl);
+      }
+    });
+  }, [sendImg])
+
   const onSubmitHandler = (e) => {
     e.preventDefault();
     navi("/");
@@ -89,6 +112,7 @@ const Write = () => {
             <img src={imageSrc} width="100%" height="100%" alt="preview-img" />
           )}
         </PictureCanvas>
+        {/* <WriteForm > */}
         <WriteForm onSubmit={onSubmitHandler}>
           <ImgUploadBtn>
             <Label for="pic">사진 선택📸</Label>
@@ -101,30 +125,12 @@ const Write = () => {
             onChange={(e) => {
               e.preventDefault();
               let file = e.target.files[0];
+              console.log(file)
               let newFileName = e.target.files[0].name;
-              const config = {
-                accessKeyId: process.env.REACT_APP_ACCESS_KEY_ID,
-                secretAccessKey: process.env.REACT_APP_SECRET_ACCESS_KEY,
-                bucketName: process.env.REACT_APP_BUCKET_NAME,
-                region: process.env.REACT_APP_REGION,
-              };
-              const s3Client = new S3upload(config);
-              // console.log(s3Client)
-              s3Client
-                .uploadFile(sendImg.file, sendImg.newFileName)
-                .then(async (data) => {
-                  if (data.status === 204) {
-                    let imgUrl = data.location;
-                    setImgURL(imgUrl);
-                    // console.log(imgUrl)
-                    //json-server 등록
-                    // await axios.post("http://localhost:3001/img", { url: imgUrl });
-                    // alert("등록이 완료되었습니다!");
-                    // return imgUrl
-                  }
-                });
               setSendImg({ file, newFileName });
               encodeFileToBase64(file);
+              console.log(sendImg)
+
             }}
           />
           <Labelbox>
@@ -212,12 +218,19 @@ const Write = () => {
           </Labelbox>
 
           <ButtonWrap>
+<<<<<<< HEAD
             <Button size="lg" variant="success" onClick={onSubmitHandler}>
               등록완료
             </Button>
             <Button size="lg" variant="outline-success">
               취소
             </Button>
+=======
+            <DoneButton onClick={() => {
+              alert('등록완료')
+            }}>등록완료</DoneButton>
+            <CancelButton>취소</CancelButton>
+>>>>>>> 9217655874034229982a5421b7566c9e10aa6302
           </ButtonWrap>
         </WriteForm>
       </WriteContainer>
