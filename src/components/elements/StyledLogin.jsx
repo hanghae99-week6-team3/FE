@@ -59,8 +59,10 @@ const StHelper = styled.div`
 //로그인, 회원가입 이동하는 텍스트
 const StNavigate = styled.span`
   display: inline-block;
+  width: 100%;
   margin-top: 15px;
   font-size: 0.9rem;
+  text-align: center;
   color: #999;
 
   span:hover {

@@ -77,25 +77,47 @@ const Detail = () => {
 
         {editMode ? (
           <>
-            <Card>
-              <div>작성자</div>
-              <div>글쓴시간</div>
-              <input type="text" name="title" value={updateProduct.title} onChange={onChangeHnadler} />
-              <select name="category" value={updateProduct.category} onChange={onChangeHnadler}>
-                <option value="노트북">노트북</option>
-                <option value="키보드">키보드</option>
-                <option value="마우스">마우스</option>
-              </select>
-              <input type="text" name="location" value={updateProduct.location} onChange={onChangeHnadler} />
-              <input type="text" name="price" value={updateProduct.price} onChange={onChangeHnadler} />
-              <textarea name="content" value={updateProduct.content} onChange={onChangeHnadler} />
-              <div>좋아요: </div>
-            </Card>
+            <StCard>
+              <StTitleGroup>
+                <StRight>
+                  <div>
+                    <select name="category" value={updateProduct.category} onChange={onChangeHnadler}>
+                      <option value="노트북">노트북</option>
+                      <option value="키보드">키보드</option>
+                      <option value="마우스">마우스</option>
+                    </select>
+                  </div>
+                  <div>
+                    <input type="text" name="title" value={updateProduct.title} onChange={onChangeHnadler} />
+                  </div>
+                  <div>
+                    <input type="text" name="price" value={updateProduct.price} onChange={onChangeHnadler} />
+                  </div>
+                </StRight>
+              </StTitleGroup>
+              <hr />
+              <StBody>
+                <textarea name="content" value={updateProduct.content} onChange={onChangeHnadler} />
+              </StBody>
+              <StFooter>
+                <div>
+                  <FontAwesomeIcon icon={faUser} />
+                  <span> 호돌이</span>
+                  <br />
+                  <FontAwesomeIcon icon={faLocationDot} />
+                  <input type="text" name="location" value={updateProduct.location} onChange={onChangeHnadler} />
+                </div>
 
-            <div>
-              <button onClick={onSaveHandler}>완료</button>
-              <button onClick={() => setEditMode(false)}>취소</button>
-            </div>
+                <div>
+                  <Button variant="success" onClick={onSaveHandler}>
+                    완료
+                  </Button>
+                  <Button variant="outline-success" onClick={() => setEditMode(false)}>
+                    취소
+                  </Button>
+                </div>
+              </StFooter>
+            </StCard>
           </>
         ) : (
           <>

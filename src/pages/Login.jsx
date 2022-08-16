@@ -55,7 +55,7 @@ const Login = () => {
               placeholder="아이디"
             />
           </FloatingLabel>
-          {!loginUser.userId ? <StHelper color={GREY}>아이디를 입력하세요.</StHelper> : null}
+          {!loginUser.userId ? <StHelper color={GREY}>아이디를 입력하세요</StHelper> : null}
         </StInputGroup>
 
         <StInputGroup>
@@ -68,7 +68,7 @@ const Login = () => {
               placeholder="비밀번호"
             />
           </FloatingLabel>
-          {!loginUser.password ? <StHelper color={GREY}>비밀번호를 입력하세요.</StHelper> : null}
+          {!loginUser.password ? <StHelper color={GREY}>비밀번호를 입력하세요</StHelper> : null}
         </StInputGroup>
 
         <StButtonGroup>
