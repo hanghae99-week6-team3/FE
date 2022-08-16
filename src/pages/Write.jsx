@@ -5,6 +5,7 @@ import axios from "axios";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { addProduct } from "../app/slice/productSlice";
+import Layout from "../components/common/Layout";
 
 const Write = () => {
   const initialState = {
@@ -20,6 +21,7 @@ const Write = () => {
   const [Category, setCategory] = useState("");
 
   const [imageSrc, setImageSrc] = useState("");
+  const navi = useNavigate();
 
   const dispatch = useDispatch();
 
@@ -36,6 +38,7 @@ const Write = () => {
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
+    navi("/");
     dispatch(
       addProduct({
         title: EditProduct.title,
@@ -66,9 +69,13 @@ const Write = () => {
   const isPrice = EditProduct.price <= 0 ? false : true;
 
   return (
-    <>
+    <Layout>
       <WriteContainer>
-        <PictureCanvas>{imageSrc && <img src={imageSrc} width="100%" height="100%" alt="preview-img" />}</PictureCanvas>
+        <PictureCanvas>
+          {imageSrc && (
+            <img src={imageSrc} width="100%" height="100%" alt="preview-img" />
+          )}
+        </PictureCanvas>
         <WriteForm onSubmit={onSubmitHandler}>
           <ImgUploadBtn>
             <Label for="pic">사진 선택📸</Label>
@@ -77,6 +84,7 @@ const Write = () => {
           <InputPicture
             id="pic"
             type="file"
+            value=""
             accept="image/*"
             onChange={(e) => {
               encodeFileToBase64(e.target.files[0]);
@@ -93,8 +101,14 @@ const Write = () => {
 
           {!isTitle ? <CheckFail>너무 짧은 제목이네요!</CheckFail> : null}
 
-          <SelectCategory onChange={CategorySelect} value={SelectCategory.value}>
-            <option value="select" selected style={{ display: "none", fontWeight: "bold" }}>
+          <SelectCategory
+            onChange={CategorySelect}
+            value={SelectCategory.value}
+          >
+            <option
+              defaultValue="select"
+              style={{ display: "none", fontWeight: "bold" }}
+            >
               품목이 무엇인가요?
             </option>
             <option value="노트북">노트북</option>
@@ -135,7 +149,7 @@ const Write = () => {
           </ButtonWrap>
         </WriteForm>
       </WriteContainer>
-    </>
+    </Layout>
   );
 };
 

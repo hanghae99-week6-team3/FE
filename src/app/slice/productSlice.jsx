@@ -7,9 +7,20 @@ export const addProduct = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       await axios.post(`${server_url}product`, payload);
-      console.log(payload);
       // const { data } = await axios.get(`${server_url}product`);
       return thunkAPI.fulfillWithValue(payload);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const loadProduct = createAsyncThunk(
+  "loadProduct",
+  async (payload, thunkAPI) => {
+    try {
+      const { data } = await axios.get(`${server_url}product`);
+      return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -25,6 +36,7 @@ const productSlice = createSlice({
 
   extraReducers: {
     [addProduct.fulfilled]: (state, { payload }) => console.log(payload),
+    [loadProduct.fulfilled]: (state, { payload }) => (state = payload),
   },
 });
 export default productSlice;
