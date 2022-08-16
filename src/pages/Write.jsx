@@ -1,11 +1,7 @@
-<<<<<<< HEAD
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-=======
-import React, { useEffect, useState } from "react";
->>>>>>> 9217655874034229982a5421b7566c9e10aa6302
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
@@ -14,8 +10,8 @@ import Layout from "../components/common/Layout";
 import S3upload from "react-aws-s3";
 import imageCompression from "browser-image-compression";
 
-window.Buffer = window.Buffer || require("buffer").Buffer;
 
+window.Buffer = window.Buffer || require("buffer").Buffer;
 const Write = () => {
   const initialState = {
     productId: 0,
@@ -85,7 +81,6 @@ const Write = () => {
 
   const CategorySelect = (e) => {
     setCategory(e.target.value);
-    console.log(isCategory);
   };
 
   const onChangeHandler = (e) => {
@@ -117,7 +112,6 @@ const Write = () => {
         <WriteForm onSubmit={onSubmitHandler}>
           <ImgUploadBtn>
             <Label for="pic">사진 선택📸</Label>
-            <ImgDeleteBtn>삭제</ImgDeleteBtn>
           </ImgUploadBtn>
           <InputPicture
             id="pic"
@@ -217,15 +211,6 @@ const Write = () => {
             <CheckDone>올바른 형식입니다.</CheckDone>
           )}
 
-          <InputTitle
-            placeholder="글제목을 입력해주세요! (25자 이내)"
-            name="title"
-            value={EditProduct.title}
-            onChange={onChangeHandler}
-            maxLength="25"
-          />
-
-          {!isTitle ? <CheckFail>너무 짧은 제목이네요!</CheckFail> : null}
           <Labelbox>
             <Form.Control
               as="textarea"
@@ -239,62 +224,13 @@ const Write = () => {
             />
           </Labelbox>
 
-          <SelectCategory
-            onChange={CategorySelect}
-            value={SelectCategory.value}
-          >
-            <option
-              defaultValue="select"
-              style={{ display: "none", fontWeight: "bold" }}
-            >
-              품목이 무엇인가요?
-            </option>
-            <option value="노트북">노트북</option>
-            <option value="키보드">키보드</option>
-            <option value="마우스">마우스</option>
-          </SelectCategory>
-          {!isCategory ? <CheckFail>품목은 필수항목이에요!</CheckFail> : null}
-          <InputLocation
-            placeholder="거래 희망 지역은 어디인가요?  (ex : 역삼역 2번출구)"
-            name="location"
-            value={EditProduct.location}
-            onChange={onChangeHandler}
-            maxLength="20"
-            autoComplete="off"
-          />
-          {!isLoacation ? <CheckFail>지역은 필수항목이에요!</CheckFail> : null}
-          <InputPrice
-            type="number"
-            placeholder="희망가격을 입력해주세요! (최대 99,999,999 원)"
-            name="price"
-            value={EditProduct.price}
-            onChange={onChangeHandler}
-            max="99999999"
-          />
-          {!isPrice ? <CheckFail>가격은 필수항목이에요!</CheckFail> : null}
-          <InputText
-            rows="8"
-            cols="30"
-            placeholder="간단한 상품설명을 입력해주세요! (250자 이내)"
-            name="content"
-            value={EditProduct.content.toLocaleString("ko-KR")}
-            onChange={onChangeHandler}
-            maxLength="250"
-          />
           <ButtonWrap>
-<<<<<<< HEAD
             <Button size="lg" variant="success" onClick={onSubmitHandler}>
               등록완료
             </Button>
             <Button size="lg" variant="outline-success">
               취소
             </Button>
-=======
-            <DoneButton onClick={() => {
-              alert('등록완료')
-            }}>등록완료</DoneButton>
-            <CancelButton>취소</CancelButton>
->>>>>>> 9217655874034229982a5421b7566c9e10aa6302
           </ButtonWrap>
         </WriteForm>
       </WriteContainer>
@@ -305,17 +241,14 @@ const Write = () => {
 const WriteContainer = styled.div`
   width: 40em;
   height: 51em;
-  border: 1px solid red;
   margin: 0 auto;
   /* margin: 30em 0 30em 0; */
 `;
 
 const WriteForm = styled.form`
-  border: 1px solid green;
   width: 38em;
   height: 30em;
   display: flex;
-  margin: 1em auto;
   margin: 0.7em auto 0 auto;
   flex-direction: column;
   padding: 0 2em 0 2em;
@@ -324,7 +257,6 @@ const WriteForm = styled.form`
 const PictureCanvas = styled.div`
   width: 18rem;
   height: 18rem;
-  border: 1px solid black;
   box-shadow: 0.1em 0.1em 0.4em 0.1em;
   margin: 1.5em auto 0 auto;
 `;
@@ -337,9 +269,6 @@ const InputPicture = styled.input`
 `;
 
 const ImgUploadBtn = styled.div`
-  border: 1px solid pink;
-  width: 18em;
-  height: 2em;
   border: none;
   border-radius: 5px;
   color: white;
@@ -348,11 +277,8 @@ const ImgUploadBtn = styled.div`
   height: 3em;
   display: flex;
   justify-content: center;
-  margin: 0 auto;
   margin: 0 auto 0.7em auto;
 `;
-
-const ImgDeleteBtn = styled.button``;
 
 const Label = styled.label`
   cursor: pointer;
@@ -364,99 +290,29 @@ const Label = styled.label`
 `;
 
 const CheckDone = styled.span`
-  color: green;
   color: #34a853;
   font-size: 0.8em;
-  margin: 0 5em;
-  font-style: italic;
   margin: 0 0.7em;
   font-weight: lighter;
 `;
 
 const CheckFail = styled.span`
-  color: red;
   color: #999;
   font-size: 0.8em;
-  margin: 0 5em;
-  font-style: italic;
   margin: 0 0.7em;
   font-weight: lighter;
 `;
 
-const InputTitle = styled.input`
-  width: 36em;
-  height: 3em;
-  margin: 0.5em auto 0 auto;
-  border: none;
-  border-bottom: 3px solid gray;
-
-  &:focus {
-    outline: none;
-    border-bottom: 3px solid #339966;
-  }
-`;
-
-const SelectCategory = styled.select`
-  width: 36em;
-  height: 3em;
-  margin: 0 auto;
-  border: none;
-  border-bottom: 3px solid gray;
-
-  &:focus {
-    outline: none;
-    border-bottom: 3px solid #339966;
-  }
-`;
-
-const InputLocation = styled.input`
-  width: 36em;
-  height: 3em;
-  margin: 0 auto;
-  border: none;
-  border-bottom: 3px solid gray;
-
-  &:focus {
-    outline: none;
-    border-bottom: 3px solid #339966;
-  }
-`;
-
-const InputPrice = styled.input`
-  width: 36em;
-  height: 3em;
-  margin: 0 auto;
-  border: none;
-  border-bottom: 3px solid gray;
-
-  &:focus {
-    outline: none;
-    border-bottom: 3px solid #339966;
-  }
 const Labelbox = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 0.6em;
 
-  &::-webkit-inner-spin-button,
-  ::-webkit-outer-spin-button {
-    -webkit-appearance: none;
   label,
   input {
   }
 `;
 
-const InputText = styled.textarea`
-  width: 36em;
-  margin: 1.5em auto 0 auto;
-  resize: none;
-  overflow: scroll;
-
-  &:focus {
-    outline: none;
-    border-bottom: 3px solid #339966;
-  }
-`;
 // const SelectCategory = styled.select`
 //   width: 36em;
 //   height: 3em;
@@ -473,46 +329,12 @@ const InputText = styled.textarea`
 // 하단버튼 관련 스타일
 
 const ButtonWrap = styled.div`
-  margin: 0 auto;
   margin: 2em auto 0 auto;
   width: 30em;
   height: 5em;
-  border: 1px solid brown;
   display: flex;
   justify-content: space-evenly;
-`;
 
-const DoneButton = styled.button`
-  background-color: #4285f4;
-  width: 10rem;
-  height: 3.5rem;
-  border: none;
-  border-radius: 5px;
-  margin: auto 0;
-  color: white;
-  font-weight: bold;
-  font-size: 1.3em;
-
-  &:hover {
-    font-size: 1.35em;
-    border: 1px solid indigo;
-  }
-`;
-
-const CancelButton = styled.button`
-  background-color: orange;
-  width: 10rem;
-  height: 3.5rem;
-  border: none;
-  border-radius: 5px;
-  margin: auto 0;
-  color: white;
-  font-weight: bold;
-  font-size: 1.3em;
-
-  &:hover {
-    font-size: 1.35em;
-    border: 1px solid gray;
   button {
     width: 45%;
   }
