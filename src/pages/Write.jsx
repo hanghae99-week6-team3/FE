@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -57,11 +57,11 @@ const Write = () => {
     s3Client.uploadFile(sendImg.file, sendImg.newFileName).then((data) => {
       if (data.status === 204) {
         let imgUrl = data.location;
-        console.log(data)
+        console.log(data);
         setImgURL(imgUrl);
       }
     });
-  }, [sendImg])
+  }, [sendImg]);
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
@@ -108,7 +108,6 @@ const Write = () => {
             <img src={imageSrc} width="100%" height="100%" alt="preview-img" />
           )}
         </PictureCanvas>
-        {/* <WriteForm > */}
         <WriteForm onSubmit={onSubmitHandler}>
           <ImgUploadBtn>
             <Label for="pic">사진 선택📸</Label>
@@ -136,8 +135,7 @@ const Write = () => {
               console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`);
               setSendImg({ file: compressedFile, newFileName });
               encodeFileToBase64(file);
-              console.log(sendImg)
-
+              console.log(sendImg);
             }}
           />
           <Labelbox>
@@ -257,7 +255,7 @@ const WriteForm = styled.form`
 const PictureCanvas = styled.div`
   width: 18rem;
   height: 18rem;
-  box-shadow: 0.1em 0.1em 0.4em 0.1em;
+  border: 1px solid #999;
   margin: 1.5em auto 0 auto;
 `;
 

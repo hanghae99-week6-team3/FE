@@ -6,6 +6,7 @@ import styled from "styled-components";
 
 const Cardlist = () => {
   const productData = useSelector((state) => state.product);
+  console.log(productData)
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(loadProduct());
@@ -16,7 +17,10 @@ const Cardlist = () => {
       {productData
         .map((card) => (
           <Card key={card.product.productId}>
-            <CardImg />
+            <CardImg>
+              <CardPicture src={card.product.img} />
+            </CardImg>
+
             <CardInfo>
               <CardTitle>{card.product.title}</CardTitle>
               <CardBottom>
@@ -71,8 +75,9 @@ const Card = styled.div`
 const CardImg = styled.div`
   width: 21em;
   height: 21em;
-  border: 1px solid #999;
+  border: none;
   margin: 1em auto 1em auto;
+  background-color: #2f2f2f;
 `;
 
 const CardInfo = styled.div`
@@ -80,6 +85,13 @@ const CardInfo = styled.div`
   height: 6.4em;
   margin: 0.5em auto;
 `;
+
+const CardPicture = styled.img`
+  width: 21em;
+  height: 21em;
+  object-fit: contain;
+  border: none;
+`
 
 const CardTitle = styled.div`
   width: 22em;
