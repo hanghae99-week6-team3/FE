@@ -37,16 +37,16 @@ const Join = () => {
 
   //ID 중복확인 함수, 유저 ID값으로 POST 요청하여 중복이 아니면 true, 중복이면 false를 반환함
   const checkId = (value) => {
-    const ok = true; //url 연결전 테스트 코드
-    // const { ok } = await axios.post(`${server_url}/auth`, {key: "userId", value}); //최종에 사용할 코드
-    return ok;
+    // const { data } = await axios.post(`${server_url}auth`, { key: "userId", value }); //최종에 사용할 코드
+    // return data.ok;
+    return true;
   };
 
   //닉네임 중복확인 함수, 유저 닉네임값으로 POST 요청하여 중복이 아니면 true, 중복이면 false를 반환함
   const checkNickname = (value) => {
-    const ok = true; //url 연결전 테스트 코드
-    // const { ok } = await axios.post(`${server_url}/auth`, {key: "nickname", value}); //최종에 사용할 코드
-    return ok;
+    // const { data } = await axios.post(`${server_url}auth`, { key: "nickname", value }); //최종에 사용할 코드
+    // return data.ok;
+    return true;
   };
 
   //onSubmit 함수
@@ -96,7 +96,7 @@ const Join = () => {
           </FloatingLabel>
           {!isId(joinUser.userId) ? (
             <StHelper color={GREY}>6~12자, 영문을 포함하고 숫자와 일부 특수문자(._-) 입력 가능</StHelper>
-          ) : !checkId() ? (
+          ) : !checkId(joinUser.userId) ? (
             <StHelper color={RED}>중복된 아이디 입니다</StHelper>
           ) : (
             <StHelper color={GREEN}>사용하실 수 있는 아이디입니다</StHelper>
@@ -115,7 +115,7 @@ const Join = () => {
           </FloatingLabel>
           {!isNickname(joinUser.nickname) ? (
             <StHelper color={GREY}>2~6자, 영문과 한글 입력 가능</StHelper>
-          ) : !checkNickname() ? (
+          ) : !checkNickname(joinUser.nickname) ? (
             <StHelper color={RED}>중복된 닉네임 입니다</StHelper>
           ) : (
             <StHelper color={GREEN}>사용하실 수 있는 닉네임입니다</StHelper>
