@@ -11,11 +11,7 @@
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",
-<<<<<<< HEAD
     "aws-sdk": "^2.1194.0",
-=======
-    "aws-sdk": "^2.1195.0",
->>>>>>> b2e5bfd0ee6de076e5450a2d763dcad82c1d0b49
     "axios": "^0.27.2",
     "bootstrap": "^5.2.0",
     "buffer": "^6.0.3",
