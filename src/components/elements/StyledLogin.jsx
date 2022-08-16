@@ -10,6 +10,7 @@ const StForm = styled.form`
   position: absolute;
 
   width: 400px;
+  width: 450px;
   padding: 30px;
   background-color: white;
   top: 50%;
@@ -37,6 +38,7 @@ const StInputGroup = styled.div`
 const StButtonGroup = styled.div`
   display: flex;
   margin-top: 20px;
+  gap: 2px;
 
   button {
     width: 50%;
@@ -48,6 +50,8 @@ const StLock = styled.div`
   position: absolute;
   margin-top: 40px;
   margin-right: 5px;
+  margin-top: 27px;
+  margin-right: 14px;
   right: 0;
   cursor: pointer;
 `;
@@ -62,8 +66,11 @@ const StHelper = styled.div`
 //로그인, 회원가입 이동하는 텍스트
 const StNavigate = styled.span`
   display: inline-block;
+  width: 100%;
   margin-top: 15px;
   font-size: 0.8rem;
+  font-size: 0.9rem;
+  text-align: center;
   color: #999;
 
   span:hover {
