@@ -27,7 +27,7 @@ const Join = () => {
 
   //입력값들을 받을 state의 초기값 설정
   //백엔드에서 서버 url을 받으면 id값은 지워주자. 목서버는 id를 안넘기면 오류가 나서 넣어뒀다.
-  const initialState = { id: 0, userId: "", nickname: "", password: "", passwordConfirm: "" };
+  const initialState = { userId: "", nickname: "", password: "", passwordConfirm: "" };
 
   //입력값들을 관리하는 state
   const [joinUser, setJoinUser] = useState(initialState);
@@ -61,7 +61,7 @@ const Join = () => {
       isPassword(joinUser.password) &&
       joinUser.password === joinUser.passwordConfirm
     ) {
-      postUser(joinUser);
+      postUser({ userId: joinUser.userId, nickname: joinUser.nickname, password: joinUser.password });
       alert("회원가입을 축하합니다!");
       navigate("/login");
     } else {
@@ -77,7 +77,7 @@ const Join = () => {
 
   //입력값을 서버로 전송하는 함수
   const postUser = async (value) => {
-    await axios.post(`${server_url}/join`, value);
+    await axios.post(`${server_url}join`, value);
   };
 
   return (

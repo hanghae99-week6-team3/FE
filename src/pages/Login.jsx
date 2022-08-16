@@ -16,7 +16,7 @@ const Login = () => {
 
   //입력값들을 받을 state의 초기값 설정
   //백엔드에서 서버 url을 받으면 id값은 지워주자. 목서버는 id를 안넘기면 오류가 나서 넣어뒀다.
-  const initialState = { id: 0, userId: "", password: "" };
+  const initialState = { userId: "", password: "" };
 
   //로그인시 POST 요청에 사용할 값을 관리하는 state
   const [loginUser, setLoginUser] = useState(initialState);
@@ -35,9 +35,9 @@ const Login = () => {
     } else if (!isId(loginUser.userId) || !isPassword(loginUser.password)) {
       alert("올바른 형식이 아닙니다.");
     } else {
-      // dispatch(__postLogin(loginUser)); //최종에 사용할 코드
-      dispatch(__postLogin()); //url 연결전 테스트 코드
+      dispatch(__postLogin(loginUser)); //최종에 사용할 코드
       alert("환영합니다!");
+      navigate("/");
     }
   };
 
