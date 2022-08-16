@@ -11,6 +11,8 @@ const Cardlist = () => {
     dispatch(loadProduct());
   }, [dispatch]);
 
+  console.log(productData);
+
   return (
     <Listwrap>
       {productData
