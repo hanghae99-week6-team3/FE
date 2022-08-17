@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -13,9 +13,9 @@ import Button from "react-bootstrap/Button";
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { isAuth } = useSelector((state) => state.user);
+  const data = useSelector((state) => state.user);
 
-  console.log(isAuth);
+  console.log(data);
 
   //입력값들을 받을 state의 초기값 설정
   //백엔드에서 서버 url을 받으면 id값은 지워주자. 목서버는 id를 안넘기면 오류가 나서 넣어뒀다.
@@ -42,7 +42,7 @@ const Login = () => {
     }
   };
 
-  if (isAuth) {
+  if (data.isAuth) {
     navigate("/");
   }
 

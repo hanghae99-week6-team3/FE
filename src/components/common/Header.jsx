@@ -3,30 +3,27 @@ import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../../app/slice/userSlice";
-import { Button } from 'react-bootstrap';
-import './header.css'
-import logo from '../img/logo.png'
-
+import { Button } from "react-bootstrap";
+import "./header.css";
+import logo from "../img/logo.png";
 
 const Header = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const onLogoutHandler = () => {
     const confirm = window.confirm("로그아웃 하시겠습니까?");
     if (confirm) {
       dispatch(logoutUser());
-      navigate("/login");
+      window.location.replace("/login");
     }
   };
-  console.log(localStorage.getItem("jwtToken"))
   return (
     <HeaderBar>
       <Link to={"/"} style={{ textDecoration: "none" }}>
         <img src={logo} style={{ padding: "0", display: "inline", width: "8em" }} />
       </Link>
       <div style={{ marginRight: "10em" }}>
-        {localStorage.getItem("jwtToken") === null ?
-          <div className='button-box'>
+        {localStorage.getItem("jwtToken") === null ? (
+          <div className="button-box">
             <Link to={"/login"}>
               <Button variant="outline-success">작성하기</Button>
             </Link>
@@ -37,14 +34,16 @@ const Header = () => {
               <Button variant="outline-success">회원가입</Button>
             </Link>
           </div>
-          :
-          <div className='button-box'>
+        ) : (
+          <div className="button-box">
             <Link to={"/write"}>
               <Button variant="outline-success">작성하기</Button>
             </Link>
-            <Button variant="outline-success" onClick={onLogoutHandler}>로그아웃</Button>
+            <Button variant="outline-success" onClick={onLogoutHandler}>
+              로그아웃
+            </Button>
           </div>
-        }
+        )}
       </div>
     </HeaderBar>
   );
@@ -64,4 +63,3 @@ const HeaderBar = styled.header`
   text-decoration: none;
   font-weight: bold;
 `;
-
