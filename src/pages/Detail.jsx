@@ -3,14 +3,26 @@ import CommentList from "../components/CommentList";
 import Layout from "../components/common/Layout";
 import Header from "../components/common/Header";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import { __getDetail, __updateDetail } from "../app/slice/detailSlice";
+import { useParams, useNavigate } from "react-router-dom";
+import {
+  __deleteDetail,
+  __getDetail,
+  __updateDetail,
+} from "../app/slice/detailSlice";
 import Button from "react-bootstrap/Button";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { faUser, faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Form from "react-bootstrap/Form";
-import { StImage, StCard, StTitleGroup, StRight, StLeft, StBody, StFooter } from "../components/elements/StyledDetail";
+import {
+  StImage,
+  StCard,
+  StTitleGroup,
+  StRight,
+  StLeft,
+  StBody,
+  StFooter,
+} from "../components/elements/StyledDetail";
 import { displayedTime } from "../utils/timeCalculation";
 
 const Detail = () => {
@@ -18,7 +30,7 @@ const Detail = () => {
   const { productId } = useParams();
   const { user } = useSelector((state) => state.user);
   const { data } = useSelector((state) => state.detail);
-
+  const navi = useNavigate();
   const [updateProduct, setUpdateProduct] = useState({});
   const [editMode, setEditMode] = useState(false);
 
@@ -32,7 +44,12 @@ const Detail = () => {
   };
 
   const onSaveHandler = () => {
-    if (!updateProduct.title || !updateProduct.location || !updateProduct.price || !updateProduct.content) {
+    if (
+      !updateProduct.title ||
+      !updateProduct.location ||
+      !updateProduct.price ||
+      !updateProduct.content
+    ) {
       alert("내용이 비어있습니다.");
     } else {
       dispatch(__updateDetail(updateProduct));
@@ -60,7 +77,11 @@ const Detail = () => {
               <StTitleGroup>
                 <StRight>
                   <div>
-                    <Form.Select name="category" value={updateProduct.category} onChange={onChangeHnadler}>
+                    <Form.Select
+                      name="category"
+                      value={updateProduct.category}
+                      onChange={onChangeHnadler}
+                    >
                       <option value="노트북">노트북</option>
                       <option value="키보드">키보드</option>
                       <option value="마우스">마우스</option>
@@ -103,7 +124,13 @@ const Detail = () => {
                     <FontAwesomeIcon icon={faUser} />
                     <span> {data.product?.nickname}</span>
                   </div>
-                  <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "4px",
+                    }}
+                  >
                     <FontAwesomeIcon icon={faLocationDot} />
                     <Form.Control
                       size="sm"
@@ -119,7 +146,10 @@ const Detail = () => {
                   <Button variant="success" onClick={onSaveHandler}>
                     완료
                   </Button>
-                  <Button variant="outline-success" onClick={() => setEditMode(false)}>
+                  <Button
+                    variant="outline-success"
+                    onClick={() => setEditMode(false)}
+                  >
                     취소
                   </Button>
                 </div>
@@ -157,7 +187,15 @@ const Detail = () => {
                     <Button variant="success" onClick={onUpdateHandler}>
                       수정
                     </Button>
-                    <Button variant="outline-success">삭제</Button>
+                    <Button
+                      variant="outline-success"
+                      onClick={() => {
+                        dispatch(__deleteDetail({ productId }));
+                        navi("/");
+                      }}
+                    >
+                      삭제
+                    </Button>
                   </div>
                 ) : null}
               </StFooter>

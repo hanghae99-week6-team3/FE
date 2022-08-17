@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
@@ -9,7 +8,6 @@ import { addProduct } from "../app/slice/productSlice";
 import Layout from "../components/common/Layout";
 import S3upload from "react-aws-s3";
 import imageCompression from "browser-image-compression";
-
 
 window.Buffer = window.Buffer || require("buffer").Buffer;
 const Write = () => {
@@ -64,8 +62,8 @@ const Write = () => {
   }, [sendImg]);
 
   const onSubmitHandler = (e) => {
-    e.preventDefault();
     navi("/");
+    window.location.reload();
 
     dispatch(
       addProduct({
@@ -98,8 +96,6 @@ const Write = () => {
 
   //
 
-
-
   return (
     <Layout>
       <WriteContainer>
@@ -125,14 +121,19 @@ const Write = () => {
               const options = {
                 maxSizeMB: 1,
                 maxWidthOrHeight: 1920,
-                useWebWorker: true
-              }
-              console.log('originalFile instanceof Blob', file instanceof Blob); // true
+                useWebWorker: true,
+              };
+              console.log("originalFile instanceof Blob", file instanceof Blob); // true
               console.log(`originalFile size ${file.size / 1024 / 1024} MB`);
 
               const compressedFile = await imageCompression(file, options);
-              console.log('compressedFile instanceof Blob', compressedFile instanceof Blob);
-              console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`);
+              console.log(
+                "compressedFile instanceof Blob",
+                compressedFile instanceof Blob
+              );
+              console.log(
+                `compressedFile size ${compressedFile.size / 1024 / 1024} MB`
+              );
               setSendImg({ file: compressedFile, newFileName });
               encodeFileToBase64(file);
               console.log(sendImg);
