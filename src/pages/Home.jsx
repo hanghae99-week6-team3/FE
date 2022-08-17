@@ -2,10 +2,14 @@ import React, { useState } from "react";
 import Cards from "../components/Cards";
 import Cardlist from "../components/CardList";
 import Layout from "../components/common/Layout";
+import Header from '../components/common/Header';
+import styled from 'styled-components';
 import Header from "../components/common/Header";
 import styled from "styled-components";
 
 const Home = () => {
+  const [category, setCategory] = useState('all')
+  console.log(category)
   const [category, setCategory] = useState("all");
   console.log(category);
 
@@ -14,6 +18,18 @@ const Home = () => {
       <Layout>
         <Header />
         <Category>
+          <AllCategory onClick={() => {
+            setCategory('all')
+          }}>전체 보기</AllCategory>
+          <Notebook onClick={() => {
+            setCategory('노트북')
+          }}>노트북</Notebook>
+          <Keyboard onClick={() => {
+            setCategory('키보드')
+          }}>키보드</Keyboard>
+          <Mouse onClick={() => {
+            setCategory('마우스')
+          }}>마우스</Mouse>
           <AllCategory
             onClick={() => {
               setCategory("all");
@@ -58,11 +74,14 @@ const Category = styled.div`
 `;
 
 const AllCategory = styled.button`
+    background-color: #aeaeae;
   background-color: #aeaeae;
   color: white;
   font-weight: bold;
+  width: 4em;
   width: 6em;
   height: 2em;
+  margin: 0.65em 0 0.65em 0.65em;
   margin: 0.65em 0.5em 0.65em 0.65em;
   display: flex;
   justify-content: center;
@@ -71,8 +90,16 @@ const AllCategory = styled.button`
   border: none;
   transition: 0.1s ease-in;
   &:hover {
+    transform: scale(1.05)
     transform: scale(1.05);
   }
+`
+
+const Category = styled.div`
+ height: 2em ;
+ margin: 1.25em;
+ display: flex;
+`
 `;
 
 const Notebook = styled.button`
@@ -89,6 +116,7 @@ const Notebook = styled.button`
   border: none;
   transition: 0.1s ease-in;
   &:hover {
+    transform: scale(1.05)
     transform: scale(1.05);
   }
 `;
@@ -107,6 +135,7 @@ const Keyboard = styled.button`
   border: none;
   transition: 0.1s ease-in;
   &:hover {
+    transform: scale(1.05)
     transform: scale(1.05);
   }
 `;
@@ -125,6 +154,7 @@ const Mouse = styled.button`
   border: none;
   transition: 0.1s ease-in;
   &:hover {
-    transform: scale(1.05);
+    transform: scale(1.05)
   }
-`;
+`;`;    transform: scale(1.05);
+  }`;

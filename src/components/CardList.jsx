@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { loadProduct } from "../app/slice/productSlice";
@@ -5,6 +6,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import Pagination from "./Pagenation";
 
+const Cardlist = ({ category }) => {
 const Cardlist = () => {
   const navigate = useNavigate();
   const productData = useSelector((state) => state.product);
@@ -19,6 +21,38 @@ const Cardlist = () => {
   const offset = (page - 1) * limit;
 
   return (
+    <Listwrap>
+      {productData
+        .map((card) => (
+          <Card key={card.product.productId}>
+            <CardImg>
+              <CardPicture src={card.product.img} />
+            </CardImg>
+            <CardInfo>
+              <CardTitle>{card.product.title}</CardTitle>
+              <CardBottom>
+                <CardCategory>
+                  {card.product.category === "노트북" ? (
+                    <Notebook>노트북</Notebook>
+                  ) : card.product.category === "키보드" ? (
+                    <Keyboard>키보드</Keyboard>
+                  ) : card.product.category === "마우스" ? (
+                    <Mouse>마우스</Mouse>
+                  ) : null}
+                </CardCategory>
+                {/* <CardCategory>{card.category}</CardCategory> */}
+                <CardPrice>
+                  {card.product.price}{" "}
+                  <span style={{ fontWeight: "bold" }}>&nbsp;원</span>
+                </CardPrice>
+                <CardLike>👍 12</CardLike>
+                <CardComment>❤ 45</CardComment>
+              </CardBottom>
+            </CardInfo>
+          </Card>
+        ))
+        .reverse()}
+    </Listwrap>
     <>
       <Listwrap>
         {productData

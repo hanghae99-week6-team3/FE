@@ -1,3 +1,4 @@
+import React from "react";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,8 +14,10 @@ import Button from "react-bootstrap/Button";
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { isAuth } = useSelector((state) => state.user);
   const data = useSelector((state) => state.user);
 
+  console.log(isAuth);
   console.log(data);
 
   //입력값들을 받을 state의 초기값 설정
@@ -42,6 +45,7 @@ const Login = () => {
     }
   };
 
+  if (isAuth) {
   if (data.isAuth) {
     navigate("/");
   }

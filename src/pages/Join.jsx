@@ -40,6 +40,11 @@ const Join = () => {
   //아이콘 클릭시 비밀번호 보이게 하기
   const [lock, setLock] = useState(true);
 
+  //ID 중복확인 함수, 유저 ID값으로 POST 요청하여 중복이 아니면 true, 중복이면 false를 반환함
+  const checkId = (value) => {
+    // const { data } = await axios.post(`${server_url}auth`, { key: "userId", value }); //최종에 사용할 코드
+    // return data.ok;
+    return true;
   const onClickIdHandler = () => {
     if (joinUser.userId.trim()) {
       dispatch(__checkId(joinUser.userId));
@@ -48,6 +53,11 @@ const Join = () => {
     }
   };
 
+  //닉네임 중복확인 함수, 유저 닉네임값으로 POST 요청하여 중복이 아니면 true, 중복이면 false를 반환함
+  const checkNickname = (value) => {
+    // const { data } = await axios.post(`${server_url}auth`, { key: "nickname", value }); //최종에 사용할 코드
+    // return data.ok;
+    return true;
   const onClickNicknameHandler = () => {
     if (joinUser.nickname.trim()) {
       dispatch(__checkNickname(joinUser.nickname));
@@ -61,11 +71,14 @@ const Join = () => {
     event.preventDefault();
     //입력값들의 모든 조건(중복, 유효성)이 true가 되어야 회원가입이 가능하다.
     if (
+      checkId(joinUser.userId) &&
+      checkNickname(joinUser.nickname) &&
       data.isIdOk &&
       data.isNicknameOk &&
       isId(joinUser.userId) &&
       isNickname(joinUser.nickname) &&
       isPassword(joinUser.password) &&
+      joinUser.password === joinUser.passwordConfirm
       joinUser.password.trim() === joinUser.passwordConfirm.trim()
     ) {
       postUser({ userId: joinUser.userId, nickname: joinUser.nickname, password: joinUser.password });
@@ -91,6 +104,7 @@ const Join = () => {
     <Layout>
       <StForm onSubmit={onSubmitHandler}>
         <StInputGroup>
+          <FloatingLabel controlId="floatingInput" label="아이디">
           <InputGroup>
             <Form.Control
               type="text"
@@ -101,6 +115,14 @@ const Join = () => {
               placeholder="아이디"
               aria-describedby="basic-addon2"
             />
+          </FloatingLabel>
+          {!isId(joinUser.userId) ? (
+            <StHelper color={GREY}>6~12자, 영문을 포함하고 숫자와 일부 특수문자(._-) 입력 가능</StHelper>
+          ) : !checkId(joinUser.userId) ? (
+            <StHelper color={RED}>중복된 아이디 입니다</StHelper>
+          ) : (
+            <StHelper color={GREEN}>사용하실 수 있는 아이디입니다</StHelper>
+          )}
             <Button type="button" variant="outline-success" id="button-addon2" onClick={onClickIdHandler}>
               중복확인
             </Button>
@@ -111,6 +133,7 @@ const Join = () => {
         </StInputGroup>
 
         <StInputGroup>
+          <FloatingLabel controlId="floatingInput" label="닉네임">
           <InputGroup>
             <Form.Control
               type="text"
@@ -120,6 +143,14 @@ const Join = () => {
               placeholder="닉네임"
               aria-describedby="basic-addon2"
             />
+          </FloatingLabel>
+          {!isNickname(joinUser.nickname) ? (
+            <StHelper color={GREY}>2~6자, 영문과 한글 입력 가능</StHelper>
+          ) : !checkNickname(joinUser.nickname) ? (
+            <StHelper color={RED}>중복된 닉네임 입니다</StHelper>
+          ) : (
+            <StHelper color={GREEN}>사용하실 수 있는 닉네임입니다</StHelper>
+          )}
             <Button type="button" variant="outline-success" id="button-addon2" onClick={onClickNicknameHandler}>
               중복확인
             </Button>
@@ -130,6 +161,15 @@ const Join = () => {
         </StInputGroup>
 
         <StInputGroup>
+          <FloatingLabel controlId="floatingPassword" label="비밀번호">
+            <Form.Control
+              type={lock ? "password" : "text"}
+              name="password"
+              value={joinUser.password}
+              onChange={onChangeHandler}
+              placeholder="비밀번호"
+            />
+          </FloatingLabel>
           <Form.Control
             type={lock ? "password" : "text"}
             name="password"
@@ -148,6 +188,15 @@ const Join = () => {
         </StInputGroup>
 
         <StInputGroup>
+          <FloatingLabel controlId="floatingPassword" label="비밀번호 확인">
+            <Form.Control
+              type="password"
+              name="passwordConfirm"
+              value={joinUser.passwordConfirm}
+              onChange={onChangeHandler}
+              placeholder="비밀번호 확인"
+            />
+          </FloatingLabel>
           <Form.Control
             type="password"
             name="passwordConfirm"
