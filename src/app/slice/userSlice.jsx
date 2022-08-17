@@ -7,6 +7,7 @@ import jwt_decode from "jwt-decode"; //jwt토큰 decode를 해주는 패키지
 const initialState = {
   user: {},
   isAuth: false,
+  isOk: true,
   error: null,
 };
 
@@ -30,6 +31,7 @@ export const __postLogin = createAsyncThunk("/login", async (value, thunkAPI) =>
     return thunkAPI.fulfillWithValue(jwt_decode(token));
   } catch (error) {
     alert("로그인 실패");
+    return thunkAPI.rejectWithValue(error);
   }
 });
 
@@ -41,7 +43,7 @@ const userSlice = createSlice({
       state.user = action.payload;
       state.isAuth = true;
     },
-    logoutUser: (state, action) => {
+    logoutUser: (state) => {
       localStorage.removeItem("jwtToken");
       state = initialState;
     },
@@ -53,6 +55,7 @@ const userSlice = createSlice({
     },
     [__postLogin.rejected]: (state, action) => {
       state.error = action.payload;
+      state.isAuth = false;
     },
   },
 });

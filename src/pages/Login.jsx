@@ -1,10 +1,10 @@
 import React from "react";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Layout from "../components/common/Layout";
 import { GREY, StForm, StInputGroup, StButtonGroup, StHelper, StNavigate } from "../components/elements/StyledLogin";
-import { isId, isPassword } from "../components/elements/regExpLogin";
+import { isId, isPassword } from "../utils/regExpLogin";
 import { __postLogin } from "../app/slice/userSlice";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
@@ -13,6 +13,9 @@ import Button from "react-bootstrap/Button";
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { isAuth } = useSelector((state) => state.user);
+
+  console.log(isAuth);
 
   //입력값들을 받을 state의 초기값 설정
   //백엔드에서 서버 url을 받으면 id값은 지워주자. 목서버는 id를 안넘기면 오류가 나서 넣어뒀다.
@@ -38,6 +41,10 @@ const Login = () => {
       dispatch(__postLogin(loginUser));
     }
   };
+
+  if (isAuth) {
+    navigate("/");
+  }
 
   return (
     <Layout>
@@ -72,9 +79,6 @@ const Login = () => {
         <StButtonGroup>
           <Button variant="success" type="submit">
             로그인
-          </Button>
-          <Button variant="outline-success" type="button" onClick={() => navigate("/")}>
-            취소
           </Button>
         </StButtonGroup>
 

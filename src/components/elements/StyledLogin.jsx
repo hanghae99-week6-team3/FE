@@ -36,7 +36,7 @@ const StButtonGroup = styled.div`
   gap: 2px;
 
   button {
-    width: 50%;
+    width: 100%;
   }
 `;
 
