@@ -3,14 +3,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { loadProduct } from "../app/slice/productSlice";
 import styled from "styled-components";
 
-const Cardlist = () => {
+const Cardlist = ({ category }) => {
   const productData = useSelector((state) => state.product);
   console.log(productData);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(loadProduct());
   }, [dispatch]);
-
   return (
     <Listwrap>
       {productData

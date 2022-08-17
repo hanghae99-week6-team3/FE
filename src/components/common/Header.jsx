@@ -5,6 +5,8 @@ import { useDispatch } from "react-redux";
 import { logoutUser } from "../../app/slice/userSlice";
 import { Button } from 'react-bootstrap';
 import './header.css'
+import logo from '../img/logo.png'
+
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -20,9 +22,7 @@ const Header = () => {
   return (
     <HeaderBar>
       <Link to={"/"} style={{ textDecoration: "none" }}>
-        <h1 style={{ padding: "0", marginLeft: "3em", display: "inline", color: "black" }}>
-          삼조전자
-        </h1>
+        <img src={logo} style={{ padding: "0", display: "inline", width: "8em" }} />
       </Link>
       <div style={{ marginRight: "10em" }}>
         {localStorage.getItem("jwtToken") === null ?

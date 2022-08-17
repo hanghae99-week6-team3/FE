@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import CommentList from "../components/CommentList";
 import Layout from "../components/common/Layout";
 import Header from "../components/common/Header";
@@ -7,18 +7,24 @@ import { useParams } from "react-router-dom";
 import { __getDetail, __updateDetail } from "../app/slice/detailSlice";
 import Button from "react-bootstrap/Button";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
-import { faUser, faLocationDot } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faLocationDot, faHeart as solidHeart } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Form from "react-bootstrap/Form";
 import { StImage, StCard, StTitleGroup, StRight, StLeft, StBody, StFooter } from "../components/elements/StyledDetail";
 import { displayedTime } from "../utils/timeCalculation";
+import { changeHeart } from '../app/slice/detailSlice';
 
 const Detail = () => {
   const dispatch = useDispatch();
   const { productId } = useParams();
   const { user } = useSelector((state) => state.user);
   const { data } = useSelector((state) => state.detail);
-
+  console.log(data)
+  const dada = useSelector(state => state.detail.data.like?.like)
+  const [like, setLike] = useState(dada)
+  console.log(like)
+  // 좋아요 여부 false or true
+  // const { like } = data.like
   const [updateProduct, setUpdateProduct] = useState({});
   const [editMode, setEditMode] = useState(false);
 
@@ -46,10 +52,12 @@ const Detail = () => {
     setUpdateProduct({ ...updateProduct, [name]: value });
   };
 
+  const [likeState, setLikeState] = useState(false)
+
   return (
     <>
-      <Header></Header>
       <Layout>
+        <Header></Header>
         <StImage>
           <img src={data.product?.img} />
         </StImage>
@@ -138,7 +146,18 @@ const Detail = () => {
                 <StLeft>
                   <div>{displayedTime(data.product?.createdAt)}</div>
                   <div>
-                    <FontAwesomeIcon icon={faHeart} />
+                    {!data.like?.like ?
+                      <button onClick={() => {
+                        dispatch(changeHeart({ productId, like: true }))
+                      }}>
+                        <FontAwesomeIcon icon={faHeart} />
+                      </button>
+                      :
+                      <button onClick={() => {
+                        dispatch(changeHeart({ productId, like: false }))
+                      }}>
+                        <FontAwesomeIcon icon={solidHeart} />
+                      </button>}
                   </div>
                 </StLeft>
               </StTitleGroup>
