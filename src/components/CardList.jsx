@@ -2,8 +2,10 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { loadProduct } from "../app/slice/productSlice";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 const Cardlist = () => {
+  const navigate = useNavigate();
   const productData = useSelector((state) => state.product);
   console.log(productData);
   const dispatch = useDispatch();
@@ -16,7 +18,9 @@ const Cardlist = () => {
       {productData
         .map((card) => (
           <Card key={card.product.productId}>
-            <CardImg>
+            <CardImg
+              onClick={() => navigate(`/product/${card.product.productId}`)}
+            >
               <CardPicture src={card.product.img} />
             </CardImg>
             <CardInfo>
