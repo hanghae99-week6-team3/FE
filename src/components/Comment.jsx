@@ -28,7 +28,8 @@ const Comment = ({ item }) => {
                                     setMode("modify")
                                 }}>수정</button>
                                 <button onClick={() => {
-                                    dispatch(deleteComment(item.id));
+                                    console.log(item.commentId)
+                                    dispatch(deleteComment(item.commentId));
                                 }}>삭제</button>
                             </CommentBtn>
                         </DropdwonBox>
@@ -47,7 +48,7 @@ const Comment = ({ item }) => {
                             <CommentBtn>
                                 <button onClick={(e) => {
                                     e.preventDefault()
-                                    dispatch(updateComment({ id: item.id, content: current_content.current.value, nickname: item.nickname }))
+                                    dispatch(updateComment({ commentId: item.commentId, content: current_content.current.value }))
                                     setMode("read")
                                 }}>등록</button>
                                 <button onClick={() => {

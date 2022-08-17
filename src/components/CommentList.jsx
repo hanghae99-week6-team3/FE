@@ -38,7 +38,7 @@ const CommentList = () => {
             </FormBox>
             <List style={{ padding: '0' }}>
                 {commentData?.map((item) => { // boolean button 누르면 
-                    return <Comment key={item.id} item={item} />
+                    return <Comment key={item.commentId} item={item} />
                 })}
             </List>
         </ListBox>
