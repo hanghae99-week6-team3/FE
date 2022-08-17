@@ -62,9 +62,6 @@ const Write = () => {
   }, [sendImg]);
 
   const onSubmitHandler = (e) => {
-    navi("/");
-    window.location.reload();
-
     dispatch(
       addProduct({
         title: EditProduct.title,
@@ -75,6 +72,7 @@ const Write = () => {
         img: imgURL,
       })
     );
+    navi("/");
   };
 
   const CategorySelect = (e) => {

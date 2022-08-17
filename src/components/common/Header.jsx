@@ -19,9 +19,12 @@ const Header = () => {
   return (
     <HeaderBar>
       <Link to={"/"} style={{ textDecoration: "none" }}>
-        <img src={logo} style={{ padding: "0", display: "inline", width: "8em" }} />
+        <img
+          src={logo}
+          style={{ padding: "0", display: "inline", width: "8em" }}
+        />
       </Link>
-      <div style={{ marginRight: "10em" }}>
+      <ButtonBox>
         {localStorage.getItem("jwtToken") === null ? (
           <div className="button-box">
             <Link to={"/login"}>
@@ -44,7 +47,7 @@ const Header = () => {
             </Button>
           </div>
         )}
-      </div>
+      </ButtonBox>
     </HeaderBar>
   );
 };
@@ -52,7 +55,7 @@ const Header = () => {
 export default Header;
 
 const HeaderBar = styled.header`
-  margin: 0 3em;
+  margin: 0 2em 0 2em;
   padding: 0;
   width: 100%;
   height: 5em;
@@ -62,4 +65,8 @@ const HeaderBar = styled.header`
   justify-content: space-between;
   text-decoration: none;
   font-weight: bold;
+`;
+
+const ButtonBox = styled.div`
+  padding-right: 3em;
 `;
