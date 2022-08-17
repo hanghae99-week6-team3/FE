@@ -1,15 +1,25 @@
 import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { loadProduct } from "../app/slice/productSlice";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import Pagination from "./Pagenation";
 
 const Cardlist = ({ category }) => {
+const Cardlist = () => {
+  const navigate = useNavigate();
   const productData = useSelector((state) => state.product);
   console.log(productData);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(loadProduct());
   }, [dispatch]);
+
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(4);
+  const offset = (page - 1) * limit;
+
   return (
     <Listwrap>
       {productData
@@ -43,6 +53,51 @@ const Cardlist = ({ category }) => {
         ))
         .reverse()}
     </Listwrap>
+    <>
+      <Listwrap>
+        {productData
+          .slice(offset, offset + limit)
+          .map((card) => (
+            <Card key={card.product.productId}>
+              <CardImg
+                onClick={() => navigate(`/product/${card.product.productId}`)}
+              >
+                <CardPicture src={card.product.img} />
+              </CardImg>
+              <CardInfo>
+                <CardTitle>{card.product.title}</CardTitle>
+                <CardBottom>
+                  <CardCategory>
+                    {card.product.category === "노트북" ? (
+                      <Notebook>노트북</Notebook>
+                    ) : card.product.category === "키보드" ? (
+                      <Keyboard>키보드</Keyboard>
+                    ) : card.product.category === "마우스" ? (
+                      <Mouse>마우스</Mouse>
+                    ) : null}
+                  </CardCategory>
+                  {/* <CardCategory>{card.category}</CardCategory> */}
+                  <CardPrice>
+                    {card.product.price}{" "}
+                    <span style={{ fontWeight: "bold" }}>&nbsp;원</span>
+                  </CardPrice>
+                  <CardLike>👍 12</CardLike>
+                  <CardComment>❤ 45</CardComment>
+                </CardBottom>
+              </CardInfo>
+            </Card>
+          ))
+          .reverse()}
+      </Listwrap>
+      <footer>
+        <Pagination
+          total={productData.length}
+          limit={limit}
+          page={page}
+          setPage={setPage}
+        />
+      </footer>
+    </>
   );
 };
 
@@ -66,6 +121,10 @@ const Card = styled.div`
   /* border: 1px solid #999; */
   box-shadow: 0em 0.1em 0.15em 0.01em;
   margin: 0 0 1.25em 1.25em;
+
+  &:hover {
+    transform: scale(1.005);
+  }
 `;
 const CardImg = styled.div`
   width: 21em;

@@ -7,6 +7,9 @@ import { Button } from 'react-bootstrap';
 import './header.css'
 import logo from '../img/logo.png'
 
+import { Button } from "react-bootstrap";
+import "./header.css";
+import logo from "../img/logo.png";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -16,6 +19,7 @@ const Header = () => {
     if (confirm) {
       dispatch(logoutUser());
       navigate("/login");
+      window.location.replace("/login");
     }
   };
   console.log(localStorage.getItem("jwtToken"))
@@ -23,10 +27,17 @@ const Header = () => {
     <HeaderBar>
       <Link to={"/"} style={{ textDecoration: "none" }}>
         <img src={logo} style={{ padding: "0", display: "inline", width: "8em" }} />
+        <img
+          src={logo}
+          style={{ padding: "0", display: "inline", width: "8em" }}
+        />
       </Link>
       <div style={{ marginRight: "10em" }}>
         {localStorage.getItem("jwtToken") === null ?
           <div className='button-box'>
+      <ButtonBox>
+        {localStorage.getItem("jwtToken") === null ? (
+          <div className="button-box">
             <Link to={"/login"}>
               <Button variant="outline-success">작성하기</Button>
             </Link>
@@ -39,13 +50,20 @@ const Header = () => {
           </div>
           :
           <div className='button-box'>
+        ) : (
+          <div className="button-box">
             <Link to={"/write"}>
               <Button variant="outline-success">작성하기</Button>
             </Link>
             <Button variant="outline-success" onClick={onLogoutHandler}>로그아웃</Button>
+            <Button variant="outline-success" onClick={onLogoutHandler}>
+              로그아웃
+            </Button>
           </div>
         }
       </div>
+        )}
+      </ButtonBox>
     </HeaderBar>
   );
 };
@@ -54,6 +72,7 @@ export default Header;
 
 const HeaderBar = styled.header`
   margin: 0 3em;
+  margin: 0 2em 0 2em;
   padding: 0;
   width: 100%;
   height: 5em;
@@ -65,3 +84,6 @@ const HeaderBar = styled.header`
   font-weight: bold;
 `;
 
+const ButtonBox = styled.div`
+  padding-right: 3em;
+`;

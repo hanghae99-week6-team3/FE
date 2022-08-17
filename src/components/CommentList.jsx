@@ -33,6 +33,7 @@ const CommentList = () => {
             ref={commentInput}
             placeholder="댓글을 입력해주세요 ! (100자 제한)"
             maxLength="100"
+            autoFocus="false"
           />
           <AddCommentBtn
             onClick={(e) => {

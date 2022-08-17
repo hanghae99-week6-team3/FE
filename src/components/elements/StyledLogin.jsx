@@ -25,6 +25,8 @@ const StInputGroup = styled.div`
 
   label,
   input {
+  input,
+  button {
     margin-top: 10px;
   }
 `;
@@ -44,6 +46,8 @@ const StButtonGroup = styled.div`
 const StLock = styled.div`
   position: absolute;
   margin-top: 27px;
+  color: ${GREY};
+  margin-top: 17px;
   margin-right: 14px;
   right: 0;
   cursor: pointer;
@@ -64,6 +68,7 @@ const StNavigate = styled.span`
   font-size: 0.9rem;
   text-align: center;
   color: #999;
+  color: ${GREY};
 
   span:hover {
     cursor: pointer;

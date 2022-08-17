@@ -19,11 +19,16 @@ import { isId, isNickname, isPassword } from "../utils/regExpLogin";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import InputGroup from "react-bootstrap/InputGroup";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useDispatch, useSelector } from "react-redux";
+import { __checkId, __checkNickname } from "../app/slice/userSlice";
 
 const Join = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const data = useSelector((state) => state.user);
 
   //입력값들을 받을 state의 초기값 설정
   //백엔드에서 서버 url을 받으면 id값은 지워주자. 목서버는 id를 안넘기면 오류가 나서 넣어뒀다.
@@ -40,6 +45,12 @@ const Join = () => {
     // const { data } = await axios.post(`${server_url}auth`, { key: "userId", value }); //최종에 사용할 코드
     // return data.ok;
     return true;
+  const onClickIdHandler = () => {
+    if (joinUser.userId.trim()) {
+      dispatch(__checkId(joinUser.userId));
+    } else {
+      alert("값을 입력해주세요");
+    }
   };
 
   //닉네임 중복확인 함수, 유저 닉네임값으로 POST 요청하여 중복이 아니면 true, 중복이면 false를 반환함
@@ -47,6 +58,12 @@ const Join = () => {
     // const { data } = await axios.post(`${server_url}auth`, { key: "nickname", value }); //최종에 사용할 코드
     // return data.ok;
     return true;
+  const onClickNicknameHandler = () => {
+    if (joinUser.nickname.trim()) {
+      dispatch(__checkNickname(joinUser.nickname));
+    } else {
+      alert("값을 입력해주세요");
+    }
   };
 
   //onSubmit 함수
@@ -56,10 +73,13 @@ const Join = () => {
     if (
       checkId(joinUser.userId) &&
       checkNickname(joinUser.nickname) &&
+      data.isIdOk &&
+      data.isNicknameOk &&
       isId(joinUser.userId) &&
       isNickname(joinUser.nickname) &&
       isPassword(joinUser.password) &&
       joinUser.password === joinUser.passwordConfirm
+      joinUser.password.trim() === joinUser.passwordConfirm.trim()
     ) {
       postUser({ userId: joinUser.userId, nickname: joinUser.nickname, password: joinUser.password });
       alert("회원가입을 축하합니다!");
@@ -85,6 +105,7 @@ const Join = () => {
       <StForm onSubmit={onSubmitHandler}>
         <StInputGroup>
           <FloatingLabel controlId="floatingInput" label="아이디">
+          <InputGroup>
             <Form.Control
               type="text"
               autoFocus
@@ -92,6 +113,7 @@ const Join = () => {
               value={joinUser.userId}
               onChange={onChangeHandler}
               placeholder="아이디"
+              aria-describedby="basic-addon2"
             />
           </FloatingLabel>
           {!isId(joinUser.userId) ? (
@@ -101,16 +123,25 @@ const Join = () => {
           ) : (
             <StHelper color={GREEN}>사용하실 수 있는 아이디입니다</StHelper>
           )}
+            <Button type="button" variant="outline-success" id="button-addon2" onClick={onClickIdHandler}>
+              중복확인
+            </Button>
+          </InputGroup>
+          <StHelper color={GREY}>6~12자, 영문을 포함하고 숫자와 일부 특수문자(._-) 입력 가능</StHelper>
+          {data.isIdOk === true ? <StHelper color={GREEN}>사용하실 수 있는 아이디입니다</StHelper> : null}
+          {data.isIdOk === false ? <StHelper color={RED}>중복된 아이디 입니다</StHelper> : null}
         </StInputGroup>
 
         <StInputGroup>
           <FloatingLabel controlId="floatingInput" label="닉네임">
+          <InputGroup>
             <Form.Control
               type="text"
               name="nickname"
               value={joinUser.nickname}
               onChange={onChangeHandler}
               placeholder="닉네임"
+              aria-describedby="basic-addon2"
             />
           </FloatingLabel>
           {!isNickname(joinUser.nickname) ? (
@@ -120,6 +151,13 @@ const Join = () => {
           ) : (
             <StHelper color={GREEN}>사용하실 수 있는 닉네임입니다</StHelper>
           )}
+            <Button type="button" variant="outline-success" id="button-addon2" onClick={onClickNicknameHandler}>
+              중복확인
+            </Button>
+          </InputGroup>
+          <StHelper color={GREY}>2~6자, 영문과 한글 입력 가능</StHelper>
+          {data.isNicknameOk === true ? <StHelper color={GREEN}>사용하실 수 있는 닉네임입니다</StHelper> : null}
+          {data.isNicknameOk === false ? <StHelper color={RED}>중복된 닉네임 입니다</StHelper> : null}
         </StInputGroup>
 
         <StInputGroup>
@@ -132,6 +170,13 @@ const Join = () => {
               placeholder="비밀번호"
             />
           </FloatingLabel>
+          <Form.Control
+            type={lock ? "password" : "text"}
+            name="password"
+            value={joinUser.password}
+            onChange={onChangeHandler}
+            placeholder="비밀번호"
+          />
           <StLock onClick={() => setLock(!lock)}>
             <FontAwesomeIcon icon={faEye} />
           </StLock>
@@ -152,6 +197,13 @@ const Join = () => {
               placeholder="비밀번호 확인"
             />
           </FloatingLabel>
+          <Form.Control
+            type="password"
+            name="passwordConfirm"
+            value={joinUser.passwordConfirm}
+            onChange={onChangeHandler}
+            placeholder="비밀번호 확인"
+          />
           {joinUser.passwordConfirm.length === 0 ? (
             <StHelper color={GREY}>비밀번호를 입력해주세요</StHelper>
           ) : joinUser.password === joinUser.passwordConfirm ? (
