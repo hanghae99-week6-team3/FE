@@ -15,7 +15,7 @@ import {
   StHelper,
   StNavigate,
 } from "../components/elements/StyledLogin";
-import { isId, isNickname, isPassword } from "../components/elements/regExpLogin";
+import { isId, isNickname, isPassword } from "../utils/regExpLogin";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -164,9 +164,6 @@ const Join = () => {
         <StButtonGroup>
           <Button variant="success" type="submit">
             회원가입
-          </Button>
-          <Button variant="outline-success" type="button" onClick={() => navigate("/")}>
-            취소
           </Button>
         </StButtonGroup>
 

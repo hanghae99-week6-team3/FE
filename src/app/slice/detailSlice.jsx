@@ -13,8 +13,9 @@ export const __getDetail = createAsyncThunk("get/detail", async (id, thunkAPI) =
 
 export const __updateDetail = createAsyncThunk("put/detail", async (payload, thunkAPI) => {
   try {
-    const { data } = await axios.put(`${server_url}product/${payload.productId}`, { product: payload });
-    return thunkAPI.fulfillWithValue(data);
+    await axios.put(`${server_url}product/${payload.productId}`, payload);
+    const { data } = await axios.get(`${server_url}product/${payload.productId}`);
+    return thunkAPI.fulfillWithValue(data.data);
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
   }
