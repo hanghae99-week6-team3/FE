@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Layout from "../components/common/Layout";
 import { GREY, StForm, StInputGroup, StButtonGroup, StHelper, StNavigate } from "../components/elements/StyledLogin";
-import { isId, isPassword } from "../components/elements/regExpLogin";
+import { isId, isPassword } from "../utils/regExpLogin";
 import { __postLogin } from "../app/slice/userSlice";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
