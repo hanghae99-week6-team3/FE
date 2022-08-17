@@ -42,9 +42,7 @@ const Login = () => {
     } else if (!isId(loginUser.userId) || !isPassword(loginUser.password)) {
       alert("올바른 형식이 아닙니다.");
     } else {
-      dispatch(__postLogin(loginUser)); //최종에 사용할 코드
-      alert("환영합니다!");
-      navigate("/");
+      dispatch(__postLogin(loginUser));
     }
   };
 

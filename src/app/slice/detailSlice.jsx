@@ -5,7 +5,7 @@ import { server_url } from ".";
 export const __getDetail = createAsyncThunk("get/detail", async (id, thunkAPI) => {
   try {
     const { data } = await axios.get(`${server_url}product/${id}`);
-    return thunkAPI.fulfillWithValue(data);
+    return thunkAPI.fulfillWithValue(data.data);
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
   }
@@ -13,7 +13,7 @@ export const __getDetail = createAsyncThunk("get/detail", async (id, thunkAPI) =
 
 export const __updateDetail = createAsyncThunk("put/detail", async (payload, thunkAPI) => {
   try {
-    const { data } = await axios.patch(`${server_url}/article/${payload.postId}`, payload);
+    const { data } = await axios.put(`${server_url}product/${payload.productId}`, { product: payload });
     return thunkAPI.fulfillWithValue(data);
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
@@ -39,6 +39,19 @@ const detailSlice = createSlice({
       state.data = action.payload;
     },
     [__getDetail.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+
+    // 상세페이지 수정
+    [__updateDetail.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__updateDetail.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.data = action.payload;
+    },
+    [__updateDetail.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },

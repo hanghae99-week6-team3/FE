@@ -26,9 +26,10 @@ export const __postLogin = createAsyncThunk("/login", async (value, thunkAPI) =>
     const token = data.token;
     localStorage.setItem("jwtToken", token); //받아온 jwt값을 jwtToken이라는 key값과 함께 로컬 스토리지에 저장
     setAuthToken(token); //HTTP 헤더에 받아온 jwt값 넘기기
+    alert("로그인 성공");
     return thunkAPI.fulfillWithValue(jwt_decode(token));
   } catch (error) {
-    return thunkAPI.rejectWithValue(error);
+    alert("로그인 실패");
   }
 });
 
