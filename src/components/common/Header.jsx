@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../../app/slice/userSlice";
 import { Button } from 'react-bootstrap';
+import './header.css'
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -15,6 +16,7 @@ const Header = () => {
       navigate("/login");
     }
   };
+  console.log(localStorage.getItem("jwtToken"))
   return (
     <HeaderBar>
       <Link to={"/"} style={{ textDecoration: "none" }}>
@@ -23,16 +25,26 @@ const Header = () => {
         </h1>
       </Link>
       <div style={{ marginRight: "10em" }}>
-        <Link to={"/write"}>
-          <Button variant="outline-success">작성하기</Button>
-        </Link>
-        <Link to={"/login"}>
-          <Button variant="outline-success">로그인</Button>
-        </Link>
-        <Link to={"/join"}>
-          <Button variant="outline-success">회원가입</Button>
-        </Link>
-        <Button variant="outline-success" onClick={onLogoutHandler}>로그아웃</Button>
+        {localStorage.getItem("jwtToken") === null ?
+          <div className='button-box'>
+            <Link to={"/login"}>
+              <Button variant="outline-success">작성하기</Button>
+            </Link>
+            <Link to={"/login"}>
+              <Button variant="outline-success">로그인</Button>
+            </Link>
+            <Link to={"/join"}>
+              <Button variant="outline-success">회원가입</Button>
+            </Link>
+          </div>
+          :
+          <div className='button-box'>
+            <Link to={"/write"}>
+              <Button variant="outline-success">작성하기</Button>
+            </Link>
+            <Button variant="outline-success" onClick={onLogoutHandler}>로그아웃</Button>
+          </div>
+        }
       </div>
     </HeaderBar>
   );
@@ -52,6 +64,4 @@ const HeaderBar = styled.header`
   text-decoration: none;
   font-weight: bold;
 `;
-
-
 

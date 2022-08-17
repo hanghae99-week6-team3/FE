@@ -17,14 +17,15 @@ export const loadComment = createAsyncThunk('loadComment',
 export const addComment = createAsyncThunk('addComment',
     async (payload, thunkAPI) => {
         try {
-            await axios.post(`${server_url}product/comment/${payload.productId}`, { content: payload.content }, {
+            const { data } = await axios.post(`${server_url}product/comment/${payload.productId}`, { content: payload.content }, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
                 },
             })
-            // const { data } = await axios.get(`${server_url}comment`)
-            // console.log(data)
-            // return thunkAPI.fulfillWithValue(data)
+            //payload에 받아온 commentId 추가
+            console.log(data)
+            // console.log(payload)
+            return thunkAPI.fulfillWithValue(data)
         } catch (error) {
             return thunkAPI.rejectWithValue(error)
         }
@@ -45,7 +46,7 @@ export const deleteComment = createAsyncThunk('deleteComment',
 export const updateComment = createAsyncThunk('updateComment',
     async (payload, thunkAPI) => {
         try {
-            await axios.put(`${server_url}comment/` + payload.id, payload)
+            await axios.put(`${server_url}comment/` + payload.commentId, payload)
             return thunkAPI.fulfillWithValue(payload)
         } catch (error) {
             return thunkAPI.rejectWithValue(payload)
@@ -62,9 +63,9 @@ const commentSlice = createSlice({
     reducers: {},
     extraReducers: {
         [loadComment.fulfilled]: (state, { payload }) => state = payload,
-        [addComment.fulfilled]: (state, { payload }) => state = payload,
-        [deleteComment.fulfilled]: (state, { payload }) => current(state).filter((item) => item.id !== payload),
-        [updateComment.fulfilled]: (state, { payload }) => current(state).map((item) => item.id === payload.id ? { ...item, content: payload.content } : item)
+        [addComment.fulfilled]: (state, { payload }) => [...current(state), payload],
+        [deleteComment.fulfilled]: (state, { payload }) => current(state).filter((item) => item.commentId !== payload),
+        [updateComment.fulfilled]: (state, { payload }) => current(state).map((item) => item.commentId === payload.commentId ? { ...item, content: payload.content } : item)
     }
 });
 
