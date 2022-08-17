@@ -11,23 +11,15 @@ import { faUser, faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Form from "react-bootstrap/Form";
 import { StImage, StCard, StTitleGroup, StRight, StLeft, StBody, StFooter } from "../components/elements/StyledDetail";
+import { displayedTime } from "../utils/timeCalculation";
 
 const Detail = () => {
   const dispatch = useDispatch();
   const { productId } = useParams();
   const { user } = useSelector((state) => state.user);
-  const { data, isLoading } = useSelector((state) => state.detail);
+  const { data } = useSelector((state) => state.detail);
 
-  const initialState = {
-    postId: 1,
-    title: "",
-    category: "",
-    location: "",
-    price: 0,
-    content: "",
-  };
-
-  const [updateProduct, setUpdateProduct] = useState(initialState);
+  const [updateProduct, setUpdateProduct] = useState({});
   const [editMode, setEditMode] = useState(false);
 
   useLayoutEffect(() => {
@@ -35,18 +27,16 @@ const Detail = () => {
   }, [dispatch, productId]);
 
   const onUpdateHandler = () => {
-    setUpdateProduct({ ...data.product });
+    setUpdateProduct(data.product);
     setEditMode(true);
   };
-
-  // console.log(updateProduct);
-  // console.log(data);
 
   const onSaveHandler = () => {
     if (!updateProduct.title || !updateProduct.location || !updateProduct.price || !updateProduct.content) {
       alert("내용이 비어있습니다.");
     } else {
       dispatch(__updateDetail(updateProduct));
+      dispatch(__getDetail(productId));
       setEditMode(false);
     }
   };
@@ -111,7 +101,7 @@ const Detail = () => {
                 <div>
                   <div>
                     <FontAwesomeIcon icon={faUser} />
-                    <span> 호돌이</span>
+                    <span> {data.product?.nickname}</span>
                   </div>
                   <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
                     <FontAwesomeIcon icon={faLocationDot} />
@@ -146,7 +136,7 @@ const Detail = () => {
                   <div>{data.product?.price.toLocaleString("ko-KR")}원</div>
                 </StRight>
                 <StLeft>
-                  <div>{data.product?.createdAt}</div>
+                  <div>{displayedTime(data.product?.createdAt)}</div>
                   <div>
                     <FontAwesomeIcon icon={faHeart} />
                   </div>
@@ -157,17 +147,19 @@ const Detail = () => {
               <StFooter>
                 <div>
                   <FontAwesomeIcon icon={faUser} />
-                  <span> 호돌이</span>
+                  <span> {data.product?.nickname}</span>
                   <br />
                   <FontAwesomeIcon icon={faLocationDot} />
                   <span> {data.product?.location}</span>
                 </div>
-                <div>
-                  <Button variant="success" onClick={onUpdateHandler}>
-                    수정
-                  </Button>
-                  <Button variant="outline-success">삭제</Button>
-                </div>
+                {user.nickname === data.product?.nickname ? (
+                  <div>
+                    <Button variant="success" onClick={onUpdateHandler}>
+                      수정
+                    </Button>
+                    <Button variant="outline-success">삭제</Button>
+                  </div>
+                ) : null}
               </StFooter>
             </StCard>
 
