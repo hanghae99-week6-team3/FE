@@ -12,7 +12,7 @@ const isNickname = (value) => {
 
 //비밀번호 유효성 검사 함수
 const isPassword = (value) => {
-  const regExp = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%^&*]{8,20}$/;
+  const regExp = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%^&*]{5,20}$/;
   return regExp.test(value);
 };
 

@@ -24,7 +24,8 @@ const StInputGroup = styled.div`
   flex-direction: column;
 
   label,
-  input {
+  input,
+  button {
     margin-top: 10px;
   }
 `;
@@ -36,14 +37,15 @@ const StButtonGroup = styled.div`
   gap: 2px;
 
   button {
-    width: 50%;
+    width: 100%;
   }
 `;
 
 //비밀번호 보이게 하기
 const StLock = styled.div`
   position: absolute;
-  margin-top: 27px;
+  color: ${GREY};
+  margin-top: 17px;
   margin-right: 14px;
   right: 0;
   cursor: pointer;
@@ -63,7 +65,7 @@ const StNavigate = styled.span`
   margin-top: 15px;
   font-size: 0.9rem;
   text-align: center;
-  color: #999;
+  color: ${GREY};
 
   span:hover {
     cursor: pointer;
