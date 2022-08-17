@@ -1,4 +1,3 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
 import axios from "axios";
 import { server_url } from ".";
@@ -7,8 +6,6 @@ import jwt_decode from "jwt-decode"; //jwt토큰 decode를 해주는 패키지
 //현재 로그인한 user를 관리하는 slice의 초기값
 const initialState = {
   user: {},
-  isAuth: false,
-  isOk: true,
   isAuth: null,
   isIdOk: null,
   isNicknameOk: null,
@@ -59,8 +56,6 @@ const userSlice = createSlice({
       state.user = action.payload;
       state.isAuth = true;
     },
-    logoutUser: (state) => {
-      localStorage.removeItem("jwtToken");
     logoutUser: (state, action) => {
       // state = { ...current(state), isAuth: action.payload.isAuth };
       state = initialState;

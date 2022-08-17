@@ -61,11 +61,7 @@ const Write = () => {
     });
   }, [sendImg]);
 
-<<<<<<< HEAD
-  const onSubmitHandler = () => {
-=======
   const onSubmitHandler = (e) => {
->>>>>>> 7cf7ecf4f3094b87e081a86fe7e2244c62a5b8a4
     dispatch(
       addProduct({
         title: EditProduct.title,
