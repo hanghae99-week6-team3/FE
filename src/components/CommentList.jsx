@@ -11,6 +11,7 @@ const CommentList = () => {
   const commentData = useSelector((state) => state.comment);
   const param = useParams();
   console.log(param.productId);
+  const commentCount = commentData.length;
   const dispatch = useDispatch();
   const commentInput = useRef();
   console.log(commentData);
@@ -21,7 +22,8 @@ const CommentList = () => {
   return (
     <ListBox>
       <CommentCount>
-        댓글 :<span styled={{ fontWeight: "bold" }}> xx개</span>
+        댓글 &nbsp;
+        <span styled={{ fontWeight: "bold" }}>{commentCount}</span>&nbsp;개
       </CommentCount>
       <FormBox>
         <h5 style={{ margin: "1em 0.5em" }}>내 닉네임</h5>

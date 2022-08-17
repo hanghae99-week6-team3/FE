@@ -4,6 +4,9 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteComment, updateComment } from "../app/slice/commentSlice";
 import styled from "styled-components";
+import { faListDots } from "@fortawesome/free-solid-svg-icons";
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Comment = ({ item }) => {
   const dispatch = useDispatch();
@@ -21,23 +24,29 @@ const Comment = ({ item }) => {
           </CommentInfo>
           {item.nickname === user.nickname ? (
             <DropdwonBox>
-              <DropdownBtn>View More</DropdownBtn>
+              <DropdownBtn>
+                <FontAwesomeIcon
+                  color="#999"
+                  size="2x"
+                  icon={faListDots}
+                ></FontAwesomeIcon>
+              </DropdownBtn>
               <CommentBtn>
-                <button
+                <ModifyBtn
                   onClick={() => {
                     setMode("modify");
                   }}
                 >
                   수정
-                </button>
-                <button
+                </ModifyBtn>
+                <DeleteBtn
                   onClick={() => {
                     console.log(item.commentId);
                     dispatch(deleteComment(item.commentId));
                   }}
                 >
                   삭제
-                </button>
+                </DeleteBtn>
               </CommentBtn>
             </DropdwonBox>
           ) : null}
@@ -46,27 +55,43 @@ const Comment = ({ item }) => {
         <CommentAlign>
           <CommentInfo>
             <Nickname>{item.nickname}</Nickname>
-            <UpdataComment type="text" defaultValue={item.content} ref={current_content} />
+            <UpdataComment
+              type="text"
+              defaultValue={item.content}
+              ref={current_content}
+              autoFocus
+            />
           </CommentInfo>
           <DropdwonBox>
-            <DropdownBtn>View More</DropdownBtn>
+            <DropdownBtn>
+              <FontAwesomeIcon
+                color="#198754"
+                size="2x"
+                icon={faCheck}
+              ></FontAwesomeIcon>
+            </DropdownBtn>
             <CommentBtn>
-              <button
+              <DoneBtn
                 onClick={(e) => {
                   e.preventDefault();
-                  dispatch(updateComment({ commentId: item.commentId, content: current_content.current.value }));
+                  dispatch(
+                    updateComment({
+                      commentId: item.commentId,
+                      content: current_content.current.value,
+                    })
+                  );
                   setMode("read");
                 }}
               >
                 등록
-              </button>
-              <button
+              </DoneBtn>
+              <CancelBtn
                 onClick={() => {
                   setMode("read");
                 }}
               >
                 취소
-              </button>
+              </CancelBtn>
             </CommentBtn>
           </DropdwonBox>
         </CommentAlign>
@@ -85,9 +110,11 @@ const L = styled.li`
 const Nickname = styled.p`
   width: 80%;
   margin: 1em;
+  font-weight: bold;
 `;
 const CommentInfo = styled.div`
   display: flex;
+  border-bottom: 1px solid #999;
   flex-direction: column;
   width: 100%;
 `;
@@ -102,12 +129,20 @@ const DropdwonBox = styled.div`
   position: relative;
   display: flex;
   align-items: center;
+  border-bottom: 1px solid #999;
+  width: 7em;
+  justify-content: center;
+
   &:hover ${CommentBtn} {
-    display: block;
+    display: flex;
+    flex-direction: column;
   }
 `;
 
-const DropdownBtn = styled.button``;
+const DropdownBtn = styled.button`
+  border: none;
+  background-color: white;
+`;
 
 const Content = styled.span`
   display: flex;
@@ -120,13 +155,43 @@ const UpdataComment = styled.textarea`
   &:focus {
     outline: 0;
   }
-  margin: 1em;
-  border: 0;
-  border-bottom: 1px solid black;
+  border: none;
+  border-bottom: 3px solid #198754;
+  margin: 1em 1em 1em 1em;
   width: 90%;
+  resize: none;
+  height: 1.5em;
+  overflow: hidden;
 `;
 
 const CommentAlign = styled.div`
   display: flex;
   justify-content: space-between;
+  width: 60em;
+`;
+
+const ModifyBtn = styled.button`
+  width: 4em;
+  height: 2.5em;
+  border: none;
+  background-color: white;
+`;
+const DeleteBtn = styled.button`
+  width: 4em;
+  height: 2.5em;
+  border: none;
+  background-color: white;
+`;
+const DoneBtn = styled.button`
+  width: 4em;
+  height: 2.5em;
+  border: none;
+  background-color: white;
+`;
+
+const CancelBtn = styled.button`
+  width: 4em;
+  height: 2.5em;
+  border: none;
+  background-color: white;
 `;
