@@ -4,15 +4,18 @@ import { loadProduct } from "../app/slice/productSlice";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
+<<<<<<< HEAD
 const Cardlist = () => {
   const navigate = useNavigate();
+=======
+const Cardlist = ({ category }) => {
+>>>>>>> 8cf1c9da332cae9e1e4f4fe05ca221a4a01166ed
   const productData = useSelector((state) => state.product);
   console.log(productData);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(loadProduct());
   }, [dispatch]);
-
   return (
     <Listwrap>
       {productData

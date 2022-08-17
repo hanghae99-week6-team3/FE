@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { server_url } from ".";
 
+
 export const __getDetail = createAsyncThunk(
   "get/detail",
   async (id, thunkAPI) => {
@@ -40,6 +41,15 @@ export const __deleteDetail = createAsyncThunk(
   }
 );
 
+export const changeHeart = createAsyncThunk("put/heart", async (payload, thunkAPI) => {
+  try {
+    await axios.put(`${server_url}product/${payload.productId}/like`, payload.like);
+    // return thunkAPI.fulfillWithValue(data.data);
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+
 const initialState = {
   data: {},
   isLoading: false,
@@ -56,6 +66,7 @@ const detailSlice = createSlice({
     },
     [__getDetail.fulfilled]: (state, action) => {
       state.isLoading = false;
+      // state.like = action.payload.like
       state.data = action.payload;
     },
     [__getDetail.rejected]: (state, action) => {

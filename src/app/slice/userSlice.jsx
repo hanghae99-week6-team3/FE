@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
 import axios from "axios";
 import { server_url } from ".";
 import jwt_decode from "jwt-decode"; //jwt토큰 decode를 해주는 패키지
@@ -6,8 +6,9 @@ import jwt_decode from "jwt-decode"; //jwt토큰 decode를 해주는 패키지
 //현재 로그인한 user를 관리하는 slice의 초기값
 const initialState = {
   user: {},
-  isAuth: false,
-  isOk: true,
+  isAuth: null,
+  isIdOk: null,
+  isNicknameOk: null,
   error: null,
 };
 
@@ -35,6 +36,18 @@ export const __postLogin = createAsyncThunk("/login", async (value, thunkAPI) =>
   }
 });
 
+//ID 중복확인 함수, 유저 ID값으로 POST 요청하여 중복이 아니면 true, 중복이면 false를 반환함
+export const __checkId = createAsyncThunk("/checkId", async (value, thunkAPI) => {
+  const { data } = await axios.post(`${server_url}auth`, { key: "userId", value });
+  return thunkAPI.fulfillWithValue(data.ok);
+});
+
+//닉네임 중복확인 함수, 유저 닉네임값으로 POST 요청하여 중복이 아니면 true, 중복이면 false를 반환함
+export const __checkNickname = createAsyncThunk("/checkNickname", async (value, thunkAPI) => {
+  const { data } = await axios.post(`${server_url}auth`, { key: "nickname", value });
+  return thunkAPI.fulfillWithValue(data.ok);
+});
+
 const userSlice = createSlice({
   name: "userSlice",
   initialState,
@@ -43,9 +56,11 @@ const userSlice = createSlice({
       state.user = action.payload;
       state.isAuth = true;
     },
-    logoutUser: (state) => {
-      localStorage.removeItem("jwtToken");
+    logoutUser: (state, action) => {
+      // state = { ...current(state), isAuth: action.payload.isAuth };
       state = initialState;
+      console.log(state);
+      localStorage.removeItem("jwtToken");
     },
   },
   extraReducers: {
@@ -56,6 +71,13 @@ const userSlice = createSlice({
     [__postLogin.rejected]: (state, action) => {
       state.error = action.payload;
       state.isAuth = false;
+    },
+
+    [__checkId.fulfilled]: (state, action) => {
+      state.isIdOk = action.payload;
+    },
+    [__checkNickname.fulfilled]: (state, action) => {
+      state.isNicknameOk = action.payload;
     },
   },
 });
