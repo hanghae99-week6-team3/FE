@@ -3,7 +3,14 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Layout from "../components/common/Layout";
-import { GREY, StForm, StInputGroup, StButtonGroup, StHelper, StNavigate } from "../components/elements/StyledLogin";
+import {
+  GREY,
+  StForm,
+  StInputGroup,
+  StButtonGroup,
+  StHelper,
+  StNavigate,
+} from "../components/elements/StyledLogin";
 import { isId, isPassword } from "../components/elements/regExpLogin";
 import { __postLogin } from "../app/slice/userSlice";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
@@ -42,49 +49,60 @@ const Login = () => {
   };
 
   return (
-    <Layout>
-      <StForm onSubmit={postLogin}>
-        <StInputGroup>
-          <FloatingLabel controlId="floatingInput" label="아이디">
-            <Form.Control
-              type="text"
-              autoFocus
-              name="userId"
-              value={loginUser.userId}
-              onChange={onChangeHandler}
-              placeholder="아이디"
-            />
-          </FloatingLabel>
-          {!loginUser.userId ? <StHelper color={GREY}>아이디를 입력하세요</StHelper> : null}
-        </StInputGroup>
+    <>
+      <Layout>
+        <StForm onSubmit={postLogin}>
+          <StInputGroup>
+            <FloatingLabel controlId="floatingInput" label="아이디">
+              <Form.Control
+                type="text"
+                autoFocus
+                name="userId"
+                value={loginUser.userId}
+                onChange={onChangeHandler}
+                placeholder="아이디"
+              />
+            </FloatingLabel>
+            {!loginUser.userId ? (
+              <StHelper color={GREY}>아이디를 입력하세요</StHelper>
+            ) : null}
+          </StInputGroup>
 
-        <StInputGroup>
-          <FloatingLabel controlId="floatingPassword" label="비밀번호">
-            <Form.Control
-              type="password"
-              name="password"
-              value={loginUser.password}
-              onChange={onChangeHandler}
-              placeholder="비밀번호"
-            />
-          </FloatingLabel>
-          {!loginUser.password ? <StHelper color={GREY}>비밀번호를 입력하세요</StHelper> : null}
-        </StInputGroup>
+          <StInputGroup>
+            <FloatingLabel controlId="floatingPassword" label="비밀번호">
+              <Form.Control
+                type="password"
+                name="password"
+                value={loginUser.password}
+                onChange={onChangeHandler}
+                placeholder="비밀번호"
+              />
+            </FloatingLabel>
+            {!loginUser.password ? (
+              <StHelper color={GREY}>비밀번호를 입력하세요</StHelper>
+            ) : null}
+          </StInputGroup>
 
-        <StButtonGroup>
-          <Button variant="success" type="submit">
-            로그인
-          </Button>
-          <Button variant="outline-success" type="button" onClick={() => navigate("/")}>
-            취소
-          </Button>
-        </StButtonGroup>
+          <StButtonGroup>
+            <Button variant="success" type="submit">
+              로그인
+            </Button>
+            <Button
+              variant="outline-success"
+              type="button"
+              onClick={() => navigate("/")}
+            >
+              취소
+            </Button>
+          </StButtonGroup>
 
-        <StNavigate>
-          아직 회원이 아니신가요? <span onClick={() => navigate("/join")}>회원가입 하러가기</span>
-        </StNavigate>
-      </StForm>
-    </Layout>
+          <StNavigate>
+            아직 회원이 아니신가요?{" "}
+            <span onClick={() => navigate("/join")}>회원가입 하러가기</span>
+          </StNavigate>
+        </StForm>
+      </Layout>
+    </>
   );
 };
 

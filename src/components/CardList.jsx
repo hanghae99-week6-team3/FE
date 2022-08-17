@@ -1,12 +1,11 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { loadProduct } from "../app/slice/productSlice";
-
 import styled from "styled-components";
 
 const Cardlist = () => {
   const productData = useSelector((state) => state.product);
-  console.log(productData)
+  console.log(productData);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(loadProduct());
@@ -20,7 +19,6 @@ const Cardlist = () => {
             <CardImg>
               <CardPicture src={card.product.img} />
             </CardImg>
-
             <CardInfo>
               <CardTitle>{card.product.title}</CardTitle>
               <CardBottom>
@@ -28,7 +26,7 @@ const Cardlist = () => {
                   {card.product.category === "노트북" ? (
                     <Notebook>노트북</Notebook>
                   ) : card.product.category === "키보드" ? (
-                    <Keyboard>{card.product.category}</Keyboard>
+                    <Keyboard>키보드</Keyboard>
                   ) : card.product.category === "마우스" ? (
                     <Mouse>마우스</Mouse>
                   ) : null}
@@ -52,14 +50,12 @@ const Cardlist = () => {
 // 카드리스트
 
 const Listwrap = styled.div`
-  border: 1px solid blue;
   width: 60em;
   height: 85%;
   display: flex;
   flex-direction: row;
   padding: 1.25em 0;
   flex-wrap: wrap;
-  overflow: scroll;
   align-items: left;
 `;
 
@@ -91,7 +87,7 @@ const CardPicture = styled.img`
   height: 21em;
   object-fit: contain;
   border: none;
-`
+`;
 
 const CardTitle = styled.div`
   width: 22em;
