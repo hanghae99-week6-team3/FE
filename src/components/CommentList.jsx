@@ -6,6 +6,8 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { addComment, loadComment } from "../app/slice/commentSlice";
 import Comment from "./Comment";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const CommentList = () => {
   const commentData = useSelector((state) => state.comment);
@@ -24,10 +26,13 @@ const CommentList = () => {
     <ListBox>
       <CommentCount>
         댓글 &nbsp;
-        <span styled={{ fontWeight: "bold" }}>{commentCount}</span>&nbsp;개
+        <span style={{ fontWeight: "700" }}>{commentCount}</span>
       </CommentCount>
       <FormBox>
-        <h5 style={{ margin: "1em 0.5em" }}>{user.nickname}</h5>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <FontAwesomeIcon icon={faUser} style={{ margin: "0.9em 0.3em 0 0.8em" }} />
+          <h5 style={{ marginTop: "1em" }}>{user.nickname}</h5>
+        </div>
         <Form>
           <InputComment
             type="text"
@@ -69,8 +74,8 @@ const CommentList = () => {
 export default CommentList;
 
 const CommentCount = styled.div`
-  margin: 5em 0 1em 0;
-  font-size: 1.3em;
+  margin: 2em 0 1em 0.6em;
+  font-size: 1em;
 `;
 
 const ListBox = styled.div`

@@ -11,4 +11,6 @@ export const store = configureStore({
     user: userSlice.reducer,
     detail,
   },
+  // 배포 환경일때, devTools가 false가 됩니다.
+  devTools: process.env.NODE_ENV !== "production",
 });

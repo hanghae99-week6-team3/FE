@@ -2,15 +2,23 @@ import Card from "react-bootstrap/Card";
 import styled from "styled-components";
 
 const StImage = styled(Card)`
-  padding: 20px;
+  /* padding: 20px; */
+  display: flex;
+  align-items: center;
+  height: 50em;
 
   img {
-    object-fit: scale-down;
+    cursor: pointer;
+    object-fit: cover;
+    width: 100%;
+    overflow: hidden;
+    /* height: 50em; */
   }
 `;
 
 const StCard = styled(Card)`
   margin-top: 20px;
+  margin-bottom: 20px;
   padding: 20px;
 `;
 
