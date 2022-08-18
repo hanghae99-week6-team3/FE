@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { loadProduct } from "../app/slice/productSlice";
 import styled from "styled-components";
 import Pagination from "./Pagenation";
-import Cards from './Cards';
+import Cards from "./Cards";
 
 const Cardlist = ({ category }) => {
   const productData = useSelector((state) => state.product);
@@ -14,10 +14,10 @@ const Cardlist = ({ category }) => {
   }, [dispatch]);
 
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(4);
+  const [limit, setLimit] = useState(6);
   const offset = (page - 1) * limit;
 
-  if (category === 'all') {
+  if (category === "all") {
     return (
       <>
         <Listwrap>
@@ -44,7 +44,7 @@ const Cardlist = ({ category }) => {
         <Listwrap>
           {productData
             .slice(offset, offset + limit)
-            .filter(item => item.product.category === category)
+            .filter((item) => item.product.category === category)
             .map((card) => (
               <Cards key={card.product.productId} card={card}></Cards>
             ))
@@ -59,7 +59,7 @@ const Cardlist = ({ category }) => {
           />
         </footer>
       </>
-    )
+    );
   }
 };
 
