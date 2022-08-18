@@ -23,7 +23,6 @@ const Cards = ({ card }) => {
               <Mouse>마우스</Mouse>
             ) : null}
           </CardCategory>
-          {/* <CardCategory>{card.category}</CardCategory> */}
           <CardPrice>
             {card.product.price}{" "}
             <span style={{ fontWeight: "bold" }}>&nbsp;원</span>
