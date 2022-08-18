@@ -97,11 +97,7 @@ const Write = () => {
   return (
     <Layout>
       <WriteContainer>
-        <PictureCanvas>
-          {imageSrc && (
-            <img src={imageSrc} width="100%" height="100%" alt="preview-img" />
-          )}
-        </PictureCanvas>
+        <PictureCanvas>{imageSrc && <img src={imageSrc} width="100%" height="100%" alt="preview-img" />}</PictureCanvas>
         <WriteForm onSubmit={onSubmitHandler}>
           <ImgUploadBtn>
             <Label for="pic">사진 선택📸</Label>
@@ -125,13 +121,8 @@ const Write = () => {
               console.log(`originalFile size ${file.size / 1024 / 1024} MB`);
 
               const compressedFile = await imageCompression(file, options);
-              console.log(
-                "compressedFile instanceof Blob",
-                compressedFile instanceof Blob
-              );
-              console.log(
-                `compressedFile size ${compressedFile.size / 1024 / 1024} MB`
-              );
+              console.log("compressedFile instanceof Blob", compressedFile instanceof Blob);
+              console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`);
               setSendImg({ file: compressedFile, newFileName });
               encodeFileToBase64(file);
               console.log(sendImg);
@@ -154,15 +145,8 @@ const Write = () => {
             <CheckDone>사용하실 수 있는 제목입니다.</CheckDone>
           )}
           <Labelbox>
-            <Form.Select
-              size="sm"
-              onChange={CategorySelect}
-              value={Form.Select.value}
-            >
-              <option
-                defaultValue="select"
-                style={{ display: "none", fontWeight: "bold" }}
-              >
+            <Form.Select size="sm" onChange={CategorySelect} value={Form.Select.value}>
+              <option defaultValue="select" style={{ display: "none", fontWeight: "bold" }}>
                 품목이 무엇인가요?
               </option>
               <option value="노트북">노트북</option>
@@ -170,11 +154,7 @@ const Write = () => {
               <option value="마우스">마우스</option>
             </Form.Select>
           </Labelbox>
-          {!isCategory ? (
-            <CheckFail>품목은 필수항목입니다.</CheckFail>
-          ) : (
-            <CheckDone>올바른 품목입니다.</CheckDone>
-          )}
+          {!isCategory ? <CheckFail>품목은 필수항목입니다.</CheckFail> : <CheckDone>올바른 품목입니다.</CheckDone>}
           <Labelbox>
             <Form.Control
               size="sm"
@@ -186,11 +166,7 @@ const Write = () => {
               autoComplete="off"
             />
           </Labelbox>
-          {!isLoacation ? (
-            <CheckFail>지역은 필수항목이에요!</CheckFail>
-          ) : (
-            <CheckDone>올바른 형식입니다.</CheckDone>
-          )}
+          {!isLoacation ? <CheckFail>지역은 필수항목이에요!</CheckFail> : <CheckDone>올바른 형식입니다.</CheckDone>}
           <Labelbox>
             <Form.Control
               size="sm"
@@ -202,11 +178,7 @@ const Write = () => {
               max="99999999"
             />
           </Labelbox>
-          {!isPrice ? (
-            <CheckFail>가격은 필수항목이에요!</CheckFail>
-          ) : (
-            <CheckDone>올바른 형식입니다.</CheckDone>
-          )}
+          {!isPrice ? <CheckFail>가격은 필수항목이에요!</CheckFail> : <CheckDone>올바른 형식입니다.</CheckDone>}
 
           <Labelbox>
             <Form.Control
@@ -225,7 +197,7 @@ const Write = () => {
             <Button size="lg" variant="success" onClick={onSubmitHandler}>
               등록완료
             </Button>
-            <Button size="lg" variant="outline-success">
+            <Button size="lg" variant="outline-success" onClick={() => navi(-1)}>
               취소
             </Button>
           </ButtonWrap>
