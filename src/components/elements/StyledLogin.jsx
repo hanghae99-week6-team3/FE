@@ -3,7 +3,7 @@ import styled from "styled-components";
 //컬러값 상수
 const GREY = "#999";
 const RED = "#ED6055";
-const GREEN = "#34A853";
+const GREEN = "#157347";
 
 //폼 박스 스타일
 const StForm = styled.form`
@@ -15,6 +15,20 @@ const StForm = styled.form`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+`;
+
+//로고
+const StLogo = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    width: 150px;
+    margin-bottom: 20px;
+  }
 `;
 
 //인풋 그룹(라벨, 인풋, 헬퍼)
@@ -73,4 +87,4 @@ const StNavigate = styled.span`
   }
 `;
 
-export { GREY, RED, GREEN, StForm, StInputGroup, StButtonGroup, StLock, StHelper, StNavigate };
+export { GREY, RED, GREEN, StForm, StLogo, StInputGroup, StButtonGroup, StLock, StHelper, StNavigate };

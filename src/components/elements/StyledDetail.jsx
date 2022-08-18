@@ -41,19 +41,11 @@ const StRight = styled.div`
 
 const StLeft = styled.div`
   display: flex;
-  gap: 57px;
-  flex-direction: column;
-  text-align: end;
+  height: 115px;
 
   div:nth-child(1) {
     font-size: 0.9rem;
     color: #999;
-  }
-
-  div:nth-child(2) {
-    color: #157347;
-    font-size: 1.5rem;
-    cursor: pointer;
   }
 `;
 

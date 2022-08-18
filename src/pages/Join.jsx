@@ -8,6 +8,7 @@ import {
   GREY,
   RED,
   GREEN,
+  StLogo,
   StForm,
   StInputGroup,
   StButtonGroup,
@@ -24,6 +25,7 @@ import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useDispatch, useSelector } from "react-redux";
 import { __checkId, __checkNickname } from "../app/slice/userSlice";
+import logo from "../components/img/logo.png";
 
 const Join = () => {
   const dispatch = useDispatch();
@@ -90,6 +92,9 @@ const Join = () => {
   return (
     <Layout>
       <StForm onSubmit={onSubmitHandler}>
+        <StLogo>
+          <img onClick={() => navigate("/")} src={logo} />
+        </StLogo>
         <StInputGroup>
           <InputGroup>
             <Form.Control

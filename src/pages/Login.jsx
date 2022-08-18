@@ -3,19 +3,26 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Layout from "../components/common/Layout";
-import { GREY, StForm, StInputGroup, StButtonGroup, StHelper, StNavigate } from "../components/elements/StyledLogin";
+import {
+  GREY,
+  StForm,
+  StLogo,
+  StInputGroup,
+  StButtonGroup,
+  StHelper,
+  StNavigate,
+} from "../components/elements/StyledLogin";
 import { isId, isPassword } from "../utils/regExpLogin";
 import { __postLogin } from "../app/slice/userSlice";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import logo from "../components/img/logo.png";
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const data = useSelector((state) => state.user);
-
-  console.log(data);
 
   //입력값들을 받을 state의 초기값 설정
   //백엔드에서 서버 url을 받으면 id값은 지워주자. 목서버는 id를 안넘기면 오류가 나서 넣어뒀다.
@@ -50,6 +57,9 @@ const Login = () => {
     <>
       <Layout>
         <StForm onSubmit={postLogin}>
+          <StLogo>
+            <img onClick={() => navigate("/")} src={logo} />
+          </StLogo>
           <StInputGroup>
             <FloatingLabel controlId="floatingInput" label="아이디">
               <Form.Control

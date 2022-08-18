@@ -9,6 +9,7 @@ import Comment from "./Comment";
 
 const CommentList = () => {
   const commentData = useSelector((state) => state.comment);
+  const { user } = useSelector((state) => state.user);
   const param = useParams();
   console.log(param.productId);
   const commentCount = commentData.length;
@@ -26,14 +27,14 @@ const CommentList = () => {
         <span styled={{ fontWeight: "bold" }}>{commentCount}</span>&nbsp;개
       </CommentCount>
       <FormBox>
-        <h5 style={{ margin: "1em 0.5em" }}>내 닉네임</h5>
+        <h5 style={{ margin: "1em 0.5em" }}>{user.nickname}</h5>
         <Form>
           <InputComment
             type="text"
             ref={commentInput}
             placeholder="댓글을 입력해주세요 ! (100자 제한)"
             maxLength="100"
-            autoFocus="false"
+            autoFocus={false}
           />
           <AddCommentBtn
             onClick={(e) => {
