@@ -30,7 +30,7 @@ function Pagination({ total, limit, page, setPage }) {
 
 const Nav = styled.nav`
   position: absolute;
-  left: 0em;
+  left: 0.2em;
   bottom: -22em;
   display: flex;
   justify-content: center;
