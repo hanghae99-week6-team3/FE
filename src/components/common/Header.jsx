@@ -19,32 +19,29 @@ const Header = () => {
   return (
     <HeaderBar>
       <Link to={"/"} style={{ textDecoration: "none" }}>
-        <img
-          src={logo}
-          style={{ padding: "0", display: "inline", width: "8em" }}
-        />
+        <img src={logo} style={{ padding: "0", display: "inline", width: "8em" }} />
       </Link>
       <ButtonBox>
         {localStorage.getItem("jwtToken") === null ? (
           <div className="button-box">
             <Link to={"/login"}>
-              <Button variant="outline-success">작성하기</Button>
+              <StButton variant="outline-success">작성하기</StButton>
             </Link>
             <Link to={"/login"}>
-              <Button variant="outline-success">로그인</Button>
+              <StButton variant="outline-success">로그인</StButton>
             </Link>
             <Link to={"/join"}>
-              <Button variant="outline-success">회원가입</Button>
+              <StButton variant="outline-success">회원가입</StButton>
             </Link>
           </div>
         ) : (
           <div className="button-box">
             <Link to={"/write"}>
-              <Button variant="outline-success">작성하기</Button>
+              <StButton variant="outline-success">작성하기</StButton>
             </Link>
-            <Button variant="outline-success" onClick={onLogoutHandler}>
+            <StButton variant="outline-success" onClick={onLogoutHandler}>
               로그아웃
-            </Button>
+            </StButton>
           </div>
         )}
       </ButtonBox>
@@ -55,7 +52,7 @@ const Header = () => {
 export default Header;
 
 const HeaderBar = styled.header`
-  margin: 0 2em 0 2em;
+  margin: 1em 2em 2em 2em;
   padding: 0;
   width: 100%;
   height: 5em;
@@ -69,4 +66,9 @@ const HeaderBar = styled.header`
 
 const ButtonBox = styled.div`
   padding-right: 3em;
+`;
+
+const StButton = styled(Button)`
+  border: none;
+  font-weight: 800;
 `;

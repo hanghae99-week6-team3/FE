@@ -58,7 +58,7 @@ const Detail = () => {
       <Layout>
         <Header></Header>
         <StImage>
-          <img src={data.product?.img} />
+          <img src={data.product?.img} onClick={() => window.open(data.product?.img)} />
         </StImage>
 
         {editMode ? (
