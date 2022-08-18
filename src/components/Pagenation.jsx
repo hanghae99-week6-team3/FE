@@ -29,6 +29,9 @@ function Pagination({ total, limit, page, setPage }) {
 }
 
 const Nav = styled.nav`
+  position: absolute;
+  left: 0em;
+  bottom: -22em;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -39,8 +42,8 @@ const Nav = styled.nav`
 const Button = styled.button`
   border: none;
   border-radius: 8px;
-  padding: 8px;
-  margin: 0;
+  padding: 0.6em;
+  margin: 0 0.5em 0 0;
   background: black;
   color: white;
   font-size: 1rem;

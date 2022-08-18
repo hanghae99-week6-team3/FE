@@ -1,14 +1,16 @@
 import React from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
+import { displayedTime } from "../utils/timeCalculation";
 
 const Cards = ({ card }) => {
   const navigate = useNavigate();
+  const { user } = useSelector((state) => state);
+  console.log(user);
   return (
     <Card>
-      <CardImg
-        onClick={() => navigate(`/product/${card.product.productId}`)}
-      >
+      <CardImg onClick={() => navigate(`/product/${card.product.productId}`)}>
         <CardPicture src={card.product.img} />
       </CardImg>
       <CardInfo>
@@ -25,11 +27,11 @@ const Cards = ({ card }) => {
           </CardCategory>
           {/* <CardCategory>{card.category}</CardCategory> */}
           <CardPrice>
-            {card.product.price}{" "}
+            {card.product.price.toLocaleString("ko-KR")}{" "}
             <span style={{ fontWeight: "bold" }}>&nbsp;원</span>
           </CardPrice>
-          <CardLike>👍 12</CardLike>
-          <CardComment>❤ 45</CardComment>
+          <CardComment>💬 {card.product.commentCount}</CardComment>
+          <CardLike>{displayedTime(card.product?.createdAt)}</CardLike>
         </CardBottom>
       </CardInfo>
     </Card>
