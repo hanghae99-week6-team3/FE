@@ -4,37 +4,23 @@ import Layout from "../components/common/Layout";
 import Header from "../components/common/Header";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
-import {
-  __deleteDetail,
-  __getDetail,
-  __updateDetail,
-} from "../app/slice/detailSlice";
+import { __deleteDetail, __getDetail, __updateDetail } from "../app/slice/detailSlice";
 import Button from "react-bootstrap/Button";
-import { faHeart } from "@fortawesome/free-regular-svg-icons";
-import { faUser, faLocationDot, faHeart as solidHeart } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Form from "react-bootstrap/Form";
-import {
-  StImage,
-  StCard,
-  StTitleGroup,
-  StRight,
-  StLeft,
-  StBody,
-  StFooter,
-} from "../components/elements/StyledDetail";
+import { StImage, StCard, StTitleGroup, StRight, StLeft, StBody, StFooter } from "../components/elements/StyledDetail";
 import { displayedTime } from "../utils/timeCalculation";
-import { changeHeart } from '../app/slice/detailSlice';
 
 const Detail = () => {
   const dispatch = useDispatch();
   const { productId } = useParams();
   const { user } = useSelector((state) => state.user);
   const { data } = useSelector((state) => state.detail);
-  console.log(data)
-  const dada = useSelector(state => state.detail.data.like?.like)
-  const [like, setLike] = useState(dada)
-  console.log(like)
+  console.log(data);
+  const dada = useSelector((state) => state.detail.data.like?.like);
+  const [like, setLike] = useState(dada);
+  console.log(like);
   // 좋아요 여부 false or true
   // const { like } = data.like
   const navi = useNavigate();
@@ -51,12 +37,7 @@ const Detail = () => {
   };
 
   const onSaveHandler = () => {
-    if (
-      !updateProduct.title ||
-      !updateProduct.location ||
-      !updateProduct.price ||
-      !updateProduct.content
-    ) {
+    if (!updateProduct.title || !updateProduct.location || !updateProduct.price || !updateProduct.content) {
       alert("내용이 비어있습니다.");
     } else {
       dispatch(__updateDetail(updateProduct));
@@ -70,7 +51,7 @@ const Detail = () => {
     setUpdateProduct({ ...updateProduct, [name]: value });
   };
 
-  const [likeState, setLikeState] = useState(false)
+  const [likeState, setLikeState] = useState(false);
 
   return (
     <>
@@ -86,11 +67,7 @@ const Detail = () => {
               <StTitleGroup>
                 <StRight>
                   <div>
-                    <Form.Select
-                      name="category"
-                      value={updateProduct.category}
-                      onChange={onChangeHnadler}
-                    >
+                    <Form.Select name="category" value={updateProduct.category} onChange={onChangeHnadler}>
                       <option value="노트북">노트북</option>
                       <option value="키보드">키보드</option>
                       <option value="마우스">마우스</option>
@@ -155,10 +132,7 @@ const Detail = () => {
                   <Button variant="success" onClick={onSaveHandler}>
                     완료
                   </Button>
-                  <Button
-                    variant="outline-success"
-                    onClick={() => setEditMode(false)}
-                  >
+                  <Button variant="outline-success" onClick={() => setEditMode(false)}>
                     취소
                   </Button>
                 </div>
@@ -175,21 +149,7 @@ const Detail = () => {
                   <div>{data.product?.price.toLocaleString("ko-KR")}원</div>
                 </StRight>
                 <StLeft>
-                  <div>{displayedTime(data.product?.createdAt)}</div>
-                  <div>
-                    {!data.like?.like ?
-                      <button onClick={() => {
-                        dispatch(changeHeart({ productId, like: true }))
-                      }}>
-                        <FontAwesomeIcon icon={faHeart} />
-                      </button>
-                      :
-                      <button onClick={() => {
-                        dispatch(changeHeart({ productId, like: false }))
-                      }}>
-                        <FontAwesomeIcon icon={solidHeart} />
-                      </button>}
-                  </div>
+                  <div>{displayedTime(data.product?.updatedAt)}</div>
                 </StLeft>
               </StTitleGroup>
               <hr />
